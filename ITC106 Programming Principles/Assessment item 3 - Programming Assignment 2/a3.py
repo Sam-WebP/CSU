@@ -4,17 +4,21 @@ class TransactionProcessingError(Exception):
 
 # Reads a single transaction from the given lines starting at index i
 def read_transaction(lines, i):
-    note_5 = check_positive_integer(lines[i].strip(), i+1)
-    note_10 = check_positive_integer(lines[i + 1].strip(), i+2)
-    note_20 = check_positive_integer(lines[i + 2].strip(), i+3)
-    note_50 = check_positive_integer(lines[i + 3].strip(), i+4)
-    note_100 = check_positive_integer(lines[i + 4].strip(), i+5)
-
-    return note_5, note_10, note_20, note_50, note_100
+    errors = []
+    notes = []
+    for j in range(i, min(i+5, len(lines))):
+        result = check_positive_integer(lines[j].strip(), j+1)
+        if isinstance(result, str):
+            errors.append(result)
+        else:
+            notes.append(result)
+    return notes, errors
 
 # Checks if a value is a positive integer or 0
 def check_positive_integer(value, line_number):
-    if value.isdigit():
+    if ',' in value:
+        return f'Invalid value: "{value}" on line {line_number}. Expected a single number per line.'
+    elif value.isdigit():
         return int(value)
     elif value == "":
         return f'Invalid value: "{value}" on line {line_number}. Value cannot be empty.'
@@ -26,17 +30,13 @@ def process_transactions(lines):
     transactions = []
     invalid_lines = []
     for i in range(0, len(lines), 5):
-        try:
-            transaction = read_transaction(lines, i)
-            if any(isinstance(val, str) for val in transaction):
-                invalid_lines += [val for val in transaction if isinstance(val, str)]
-            else:
-                transactions.append(transaction)
-        except IndexError:
-            print("** Error: file contains invalid data **")
-            raise TransactionProcessingError
+        transaction, errors = read_transaction(lines, i)
+        if errors:
+            invalid_lines.extend(errors)
+        else:
+            transactions.append(tuple(transaction))
     if invalid_lines:
-        raise TransactionProcessingError
+        raise TransactionProcessingError("\n".join(invalid_lines))
     return transactions
 
 # Calculates the total dollar amount of a transaction given the number of notes for each value
@@ -108,4 +108,3 @@ def main():
 # Run the main function
 if __name__ == "__main__":
     main()
-
