@@ -3,59 +3,23 @@
 
 ** Loaded (8) records from the file (n1.txt)  **
 
-** Found (4) valid and (4) invalid transaction records ** 
+** Found (5) valid and (3) invalid transaction records ** 
 
 Machine ID | Requested Notes | Deposit Amount  | Status 
 --------------------------------------------------------
   123SYD   |    4:2:2:0:0    |       100       |    S   
+  427SYD   |    0:1:2:2:0    |       200       |    F   
   251BMT   |    0:5:0:2:1    |       200       |    F   
   796DUB   |   0:0:10:2:0    |       300       |    S   
   584WGA   |    8:6:0:0:0    |       100       |    S   
 
 
-Error at Line 2: Each record must have 4 fields.
-Error at Line 2: Deposit amount must be an integer number.
-Error at Line 2: Status must be a single letter which is either S (Success) or F (Fail).
+** Transaction statistics **
+- Successful transactions: 3
+- Failed transactions: 3
 Error at Line 3: Status must be a single letter which is either S (Success) or F (Fail).
 Error at Line 4: Status must be a single letter which is either S (Success) or F (Fail).
 Error at Line 8: Machine ID must be three digits followed by three letters.
-
-↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ RESULTS FOR n2.txt ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
-
-** Loaded (8) records from the file (n2.txt)  **
-
-** Found (4) valid and (4) invalid transaction records ** 
-
-Machine ID | Requested Notes | Deposit Amount  | Status 
---------------------------------------------------------
-  427SYD   |    0:1:2:2:0    |       200       |    F   
-  115BHS   |   10:0:0:0:0    |       50        |    S   
-  796DUB   |   0:0:10:2:0    |       300       |    S   
-  584WGA   |    8:6:0:0:0    |       100       |    S   
-
-
-Error at Line 1: Requested notes must be five numbers separated by colons.
-Error at Line 4: Deposit amount must be an integer number.
-Error at Line 5: Machine ID must be three digits followed by three letters.
-Error at Line 8: Deposit amount must be an integer number.
-
-↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ RESULTS FOR n3.txt ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
-
-** Loaded (3) records from the file (n3.txt)  **
-
-** Found (2) valid and (1) invalid transaction records ** 
-
-Machine ID | Requested Notes | Deposit Amount  | Status 
---------------------------------------------------------
-  427SYD   |    0:1:2:2:0    |       200       |    F   
-  115BHS   |   10:0:0:0:0    |       50        |    S   
-
-
-Error at Line 1: Each record must have 4 fields.
-Error at Line 1: Machine ID must be three digits followed by three letters.
-Error at Line 1: Requested notes must be five numbers separated by colons.
-Error at Line 1: Deposit amount must be an integer number.
-Error at Line 1: Status must be a single letter which is either S (Success) or F (Fail).
 
 ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ RESULTS FOR n4.txt ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
 
@@ -72,6 +36,9 @@ Machine ID | Requested Notes | Deposit Amount  | Status
   426PMQ   |    2:0:2:4:1    |       400       |    F   
 
 
+** Transaction statistics **
+- Successful transactions: 5
+- Failed transactions: 3
 Error at Line 2: Machine ID must be three digits followed by three letters.
 Error at Line 5: Requested notes must be five numbers separated by colons.
 Error at Line 6: Deposit amount must be an integer number.
@@ -87,6 +54,9 @@ Machine ID | Requested Notes | Deposit Amount  | Status
   251BMT   |    0:5:0:2:1    |       200       |    F   
 
 
+** Transaction statistics **
+- Successful transactions: 2
+- Failed transactions: 2
 Error at Line 1: Requested notes must be five numbers separated by colons.
 Error at Line 2: Requested notes must be five numbers separated by colons.
 Error at Line 4: Requested notes must be five numbers separated by colons.
