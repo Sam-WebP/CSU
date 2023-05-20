@@ -1,11 +1,11 @@
-
-def handle_error(record, line_number, error_records, error_messages, message):
-    if record not in error_records:
-        error_records.append(record)
-    if line_number in error_messages:
-        error_messages[line_number].append(message)
-    else:
-        error_messages[line_number] = [message]
+def print_errors(file_info):
+    all_errors = []
+    for error_type, error_data in file_info["error_info"].items():
+        for line_number in error_data["error_lines"]:
+            all_errors.append((line_number, error_data['message']))
+    all_errors.sort()
+    for line_number, message in all_errors:
+        print(f"Error at Line {line_number}: {message}")
 
 def validate_machine_id(record):
     machine_id = record[0].upper()
@@ -22,28 +22,25 @@ def validate_deposit(record):
     except ValueError:
         return False
     
-def validate_status(record, status_tracker):
+def validate_status(record):
     if len(record) >= 4 and isinstance(record[3], str):
         status = record[3].upper()
-        status_tracker.append(status)
         return status == "S" or status == "F"
     else:
         return False
 
-def print_record_info(records, error_records, filename):
-    print(f"\n** Loaded ({len(records)}) records from the file ({filename})  **\n")
-    print(f"** Found ({len(records) - len(error_records)}) valid and ({len(error_records)}) invalid transaction records ** \n")
+def print_record_info(file_info):
+    record_count = len(file_info['records'])
+    error_count = len(file_info['error_records'])
+    valid_count = record_count - error_count
+    print(f"\n** Loaded ({record_count}) records from the file ({file_info['name']})  **\n")
+    print(f"** Found ({valid_count}) valid and ({error_count}) invalid transaction records ** \n")
 
-def print_errors(error_messages):
-    for line_number, list_of_errors_on_this_line in error_messages.items():
-        for error_message in list_of_errors_on_this_line:
-            print(f"Error at Line {line_number}: {error_message}")
-
-def print_table_info(records, error_records):
+def print_table_info(file_info):
     print("{:^10s} | {:^15s} | {:^15s} | {:^7s}".format("Machine ID", "Requested Notes", "Deposit Amount", "Status"))
     print("--------------------------------------------------------")
-    for record in records:
-        if record not in error_records:
+    for record in file_info['records']:
+        if record not in file_info['error_records']:
             print("{:^10s} | {:^15s} | {:^15s} | {:^7s}".format(record[0], record[1], record[2], record[3]))
 
 def print_welcome_message():
@@ -51,51 +48,93 @@ def print_welcome_message():
     print("WELCOME TO UTOPIA BANK")
     print("----------------------\n")
 
-def validate_record(line, i, error_records, error_messages, status_tracker): #Verify each lines meets the conditions, if not then store them as an error line
-    if not validate_machine_id(line):
-        handle_error(line, i, error_records, error_messages, "Machine ID must be three digits followed by three letters.")
-    if not validate_requested_notes(line):
-        handle_error(line, i, error_records, error_messages, "Requested notes must be five numbers separated by colons.")
-    if not validate_deposit(line):
-        handle_error(line, i, error_records, error_messages, "Deposit amount must be an integer number.")
-    if not validate_status(line, status_tracker):
-        handle_error(line, i, error_records, error_messages, "Status must be a single letter which is either S (Success) or F (Fail).")
+def status_counter(record, file_info, error_records):
+    record = file_info['records'][-1]
+    status = file_info['records'][-1][3]
+    error_records = file_info["error_records"]
+    if isinstance(status, str) and record not in error_records:
+        if status.upper() == "S":
+            file_info["transactions"]["successful"] += 1
+        elif status.upper() == "F":
+            file_info["transactions"]["failed"] += 1
+
+def print_statuses(file_info):
+    print(f"- Successful transactions: {file_info['transactions']['successful']}")
+    print(f"- Failed transactions: {file_info['transactions']['failed']}")
+
+def validate_record(file_info, i): #Verify each lines meets the conditions, if not then store them as an error line
+    line = file_info['records'][-1]
+    validators = {
+        "machine_id": validate_machine_id,
+        "requested_notes": validate_requested_notes,
+        "deposit_amount": validate_deposit,
+        "status": validate_status
+    }
+    for key, validator in validators.items():
+        if not validator(line):
+            file_info["error_info"][key]["error_lines"].append(i)
+            file_info["error_records"].append(line)
 
 def process_line(line, records): #Break up each record into a separate array with each field separated by "|"
     split_line = [item.strip() for item in line.split('|')]
     records.append(split_line)
     return split_line
 
-def write_results(filename, records, error_records, error_messages): #Handle how to display the results: 
-    print_record_info(records, error_records, filename)
-    print_table_info(records, error_records)
+def write_results(file_info): #Handle how to display the results: 
+    print_record_info(file_info)
+    print_table_info(file_info)
     print("\n")
-    print_errors(error_messages)
+    print_errors(file_info)
 
 def main():
-    error_messages = {} #Where errors get reported
-    records = [] #Where every record gets stored
-    error_records = [] #Where only the records that have an error get stored
-    i = 0 #Number of iterations
-    incorrect_format = False #Flag for incorrectly formatted file
-    status_tracker = [] #Tracks the statuses of records
     print_welcome_message()
-    filename = input('Enter the file name: ')
+
+    file_info = {
+        "name": "placeholder",
+        "records": [], #Where every record gets stored
+        "error_records": [], #Where only the records that have an error get stored
+        "error_info": {
+            "machine_id": {
+                "error_lines": [],
+                "message": "Machine ID must be three digits followed by three letters."
+            },
+            "requested_notes": {
+                "error_lines": [],
+                "message": "Requested notes must be five numbers separated by colons."
+            },
+            "deposit_amount": {
+                "error_lines": [],
+                "message": "Deposit amount must be an integer number."
+            },
+            "status": {
+                "error_lines": [],
+                "message": "Status must be a single letter which is either S (Success) or F (Fail)."
+            }
+        }, 
+        "incorrect_format": False,
+        "transactions": {
+            "successful": 0,
+            "failed": 0
+        }
+    }
+    i = 0 #Number of iterations    
+    file_info['name'] = input('Enter the file name: ')
     try:
-        with open(filename, 'r') as file:
+        with open(file_info['name'], 'r') as file:
             lines = file.readlines()
             for line in lines: #Do this loop on every line within this file
                 i += 1
-                record = process_line(line, records) #Breaks up line into an array separated by "|"
+                record = process_line(line, file_info["records"]) #Breaks up line into an array separated by "|"
                 if len(record) != 4: #Checks that the record has all four fields
-                    print(f"\n** Error: file ({filename}) is incorrectly formatted **\n")
-                    incorrect_format = True
+                    print(f"\n** Error: file ({file_info['name']}) is incorrectly formatted **\n")
+                    file_info["incorrect_format"] = True
                     break
-                validate_record(record, i, error_records, error_messages) #Checks that all the conditions are met           
-            if not lines: #Close the file once there are no more lines
-                return            
-            if not incorrect_format:
-                write_results(filename, records, error_records, error_messages) #Write the results   
+                validate_record(file_info, i) #Checks that all the conditions are met
+                status_counter(record, file_info, file_info["error_records"])        
+        if not lines: #Close the file once there are no more lines
+            return            
+        if not file_info["incorrect_format"]:
+            write_results(file_info) #Write the results   
     except FileNotFoundError: #Print error if the file cannot be found
         print("\n** Error: cannot find the file **")
         print("\n** Transaction processing failed. Exiting. **\n")
