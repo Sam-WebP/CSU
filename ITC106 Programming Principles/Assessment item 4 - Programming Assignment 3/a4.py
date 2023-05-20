@@ -7,13 +7,27 @@ def handle_error(record, line_number, error_records, error_messages, message):
     else:
         error_messages[line_number] = [message]
 
-def check_machine_id(record):
+def validate_machine_id(record):
     machine_id = record[0].upper()
     return len(machine_id) == 6 and machine_id[:3].isdigit() and machine_id[3:].isalpha()
 
-def check_requested_notes(record):
+def validate_requested_notes(record):
     requested_notes = record[1].split(':')
     return len(requested_notes) == 5 and all(note.isdigit() for note in requested_notes)
+
+def validate_deposit(record):
+    try:
+        int(record[2])
+        return True
+    except ValueError:
+        return False
+    
+def validate_status(record):
+    if len(record) >= 4 and isinstance(record[3], str):
+        status = record[3].upper()
+        return status == "S" or status == "F"
+    else:
+        return False
 
 def print_record_info(records, error_records, filename, f=None):
     print(f"\n** Loaded ({len(records)}) records from the file ({filename})  **\n", file=f)
@@ -45,6 +59,8 @@ def main():
     print_welcome_message()
     choice = input('"A" or "B": ')
     results_file = "results.txt"
+    with open(results_file, 'w'):
+        pass
     if choice.upper() == 'B':
         filename = input("\nEnter the name of the file you want to process: ")
         process_file(filename, None)
@@ -54,7 +70,7 @@ def main():
             process_file(filename, results_file)
         print(f'\nResults file created. Please check "{results_file}".\n')
     else:
-        print("Invalid choice. Please enter 'specific' or 'all'.")
+        print("Invalid choice. Please enter 'A' or 'B'.")
 
 def process_file(filename, results_file):
     error_messages = {}
@@ -72,10 +88,14 @@ def process_file(filename, results_file):
                 #Verify each lines meets the conditions, if not then store them as an error line
                 if len(split_line) != 4:
                     handle_error(split_line, i, error_records, error_messages, "Each record must have 4 fields.")
-                if not check_machine_id(split_line):
+                if not validate_machine_id(split_line):
                     handle_error(split_line, i, error_records, error_messages, "Machine ID must be three digits followed by three letters.")
-                if not check_requested_notes(split_line):
+                if not validate_requested_notes(split_line):
                     handle_error(split_line, i, error_records, error_messages, "Requested notes must be five numbers separated by colons.")
+                if not validate_deposit(split_line):
+                    handle_error(split_line, i, error_records, error_messages, "Deposit amount must be an integer number.")
+                if not validate_status(split_line):
+                    handle_error(split_line, i, error_records, error_messages, "Status must be a single letter which is either S (Success) or F (Fail).")
             #Close the file once there are no more lines
             if not lines:
                 return           
