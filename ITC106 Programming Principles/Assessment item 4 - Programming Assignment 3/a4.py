@@ -166,11 +166,13 @@ def main():
                 validate_record(file_info, i) #Verify if the record meets all the conditions
                 note_counter(file_info) #Counts the requested notes
                 status_counter(file_info) #Counts successful and failed statuses
-       
+
         if not file_info["incorrect_format"]: #If loop was not broken by an incorrect format being flagged:
             write_results(file_info) #Write the results
 
     except FileNotFoundError: #Print error if the file cannot be found
         print(f"\n** Error: cannot find the file ({file_info['name']})**")
 
-main()
+# Run the main function
+if __name__ == "__main__":
+    main()
