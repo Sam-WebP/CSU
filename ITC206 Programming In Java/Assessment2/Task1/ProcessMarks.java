@@ -1,4 +1,4 @@
-package Assessment2;
+package Assessment2.Task1;
 import java.util.Arrays;
 
 public class ProcessMarks {
@@ -50,7 +50,7 @@ public class ProcessMarks {
             total += marks[i];
         }
 
-        return (double) total / marks.length; // Return the mean as a double because java converts division to an int by default
+        return (double) total / marks.length; // Return the mean as a double because java converts int division to an int by default
     }
 
     public static double median(int[] marks) {
@@ -96,28 +96,7 @@ public class ProcessMarks {
         return highestStreakValue;
     }
 
-    public static void grades(int[] marks) {
-        int[] gradeBoundaries = {90, 75, 60, 50, 45};
-        char[] grades = {'A', 'B', 'C', 'D', 'E', 'F'};
-        char[] gradeMatch = new char[marks.length + 1];
-
-        for (int i = 0; i < marks.length; i++) {
-            for (int z = 0; z < gradeBoundaries.length; z++) {
-                if (marks[i] >= gradeBoundaries[z] || marks[i] < gradeBoundaries[4]) {
-                    gradeMatch[i] = grades[z];
-                }
-            }
-        }
-
-        for (int y = 0; y < gradeMatch.length; y++) {
-            System.out.println(gradeMatch[y] + " ");
-            if (y % 10 == 9)
-				System.out.println();
-        }
-
-    }
-
-    public static String gradez(int[] marks) {
+    public static char[] grades(int[] marks) {
         int[] gradeBoundaries = {90, 75, 60, 50, 45};
         char[] grades = {'A', 'B', 'C', 'D', 'E', 'F'};
         char[] gradeMatch = new char[marks.length];
@@ -133,19 +112,29 @@ public class ProcessMarks {
                 gradeMatch[i] = 'F';
             }
         }
-    
-        // Building the string to return
-        StringBuilder result = new StringBuilder();
-        for (int y = 0; y < gradeMatch.length; y++) {
-            result.append(gradeMatch[y]).append(" ");
-            if (y % 30 == 29) {
-                result.append("\n");
-            }
-        }
-
-        return result.toString();
-    
+        return gradeMatch;
     }
 
+    public static int[] gradeDistn(char[] grades) {
+        int[] gradeDistn = new int[grades.length];
+
+        for (int i = 0; i < grades.length; i++) {
+            if (grades[i] == 'A') {
+                gradeDistn[0]++;
+            } else if (grades[i] == 'B') {
+                gradeDistn[1]++;
+            } else if (grades[i] == 'C') {
+                gradeDistn[2]++;
+            } else if (grades[i] == 'D') {
+                gradeDistn[3]++;
+            } else if (grades[i] == 'E') {
+                gradeDistn[4]++;
+            } else {
+                gradeDistn[5]++;
+            }
+        }
+        
+        return gradeDistn;
+    }   
 
 }
