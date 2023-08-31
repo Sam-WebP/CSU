@@ -32,9 +32,9 @@ public class TestPoint3D {
         // Initiate an array of Point3D objects
         Point3D[] points = {p1, p2, p3, p4, p5};
 
-        double[][] pointCoordinates = objectArrToPoints(points);
-
+        // Run the max and min methods on an array of Point3D objects to find the min and max distance coordinate combinations
         max(points);
+        min(points);
 
         // Print the returned answers from the two distance methods
         System.out.println("The distance between p1 & p2 is " + p1.distance(p2));
@@ -64,62 +64,45 @@ public class TestPoint3D {
         return justPoints;
     }
 
-    // Takes in an array of arrays that has points so that it can calculate and display the max distance between the points in the array, and the pair of points where the max occurs
-    public static void max(double[][] pointCoordinates) {
-        
-        double longestDistance = 0;
-        
-        for (int i = 0; i < pointCoordinates.length; i++) {
-            Point3D currentPoint = new Point3D(pointCoordinates[i][0], pointCoordinates[i][1], pointCoordinates[i][2], "red");
-
-            for (int z = 0; z < pointCoordinates.length; z++) {
-                Point3D comparePoint = new Point3D(pointCoordinates[z][0], pointCoordinates[z][1], pointCoordinates[z][2], "red");
-
-                if (currentPoint.distance(comparePoint) > longestDistance) {
-                    longestDistance = currentPoint.distance(comparePoint);
-                }
-            }
-            
-
-        }
-
-        
-
-    }
-
     public static void max(Point3D[] points) {
         
-        double longestDistance = 0;
-        Point3D[] longestDistanceCombo = new Point3D[2];
+        double maxDistance = 0;
+        Point3D[] maxDistancePair = new Point3D[2];
         
-        for (int i = 0; i < points.length; i++) {
-            System.out.println("points[i] = " + points[i]);
+        for (int i = 0; i < points.length; i++) { 
+            for (int j = i+1; j < points.length; j++) { // Starting the second loop at i+1 to avoid iterating and calculating the same coordinates more than once
+                double currentDistance = points[i].distance(points[j]);
 
-            for (int z = 0; z < points.length; z++) {
-                System.out.println("points[z] = " + points[z]);
-
-                if (points[i].distance(points[z]) > longestDistance) {
-                    longestDistance = points[i].distance(points[z]);
-                    longestDistanceCombo[0] = points[i];
-                    longestDistanceCombo[1] = points[z];
+                if (currentDistance > maxDistance) {
+                    maxDistance = currentDistance;
+                    maxDistancePair[0] = points[i];
+                    maxDistancePair[1] = points[j];
                 }
             }
-            
-
         }
-        System.out.println("BELOW IS THE TEST OF THE RESPONSE:");
-        System.out.println(longestDistanceCombo[0].getX());
-        System.out.println(longestDistanceCombo[0].getY());
-        System.out.println(longestDistanceCombo[0].getZ());
-        System.out.println(longestDistanceCombo[1].getX());
-        System.out.println(longestDistanceCombo[1].getY());
-        System.out.println(longestDistanceCombo[1].getZ());
-
-
-        // System.out.println("The longest distance is " + longestDistance);
-        // System.out.println("The coordinates for them are " + longestDistanceCombo[0].getX + ", " + longestDistanceCombo[0].getY + ", " +  longestDistanceCombo[0].getZ );
-
+        System.out.println("The maximum distance between any two points is: " + maxDistance);
+        System.out.println("This distance occurs between points: " + maxDistancePair[0].getX() + ", " + maxDistancePair[0].getY() + ", " + maxDistancePair[0].getZ() + " & " + maxDistancePair[1].getX() + ", " + maxDistancePair[1].getY() + ", " + maxDistancePair[1].getZ());
     }
 
-    
+    public static void min(Point3D[] points) {
+        
+        double minDistance = 0;
+        Point3D[] minDistancePair = new Point3D[2];
+        
+        for (int i = 0; i < points.length; i++) { 
+            for (int j = i+1; j < points.length; j++) { // Starting the second loop at i+1 to avoid iterating and calculating the same coordinates more than once
+                double currentDistance = points[i].distance(points[j]);
+
+                if (currentDistance < minDistance) {
+                    minDistance = currentDistance;
+                    minDistancePair[0] = points[i];
+                    minDistancePair[1] = points[j];
+                }
+            }
+        }
+        System.out.println("The minimum distance between any two points is: " + minDistance);
+        System.out.println("This distance occurs between points: " + minDistancePair[0].getX() + ", " + minDistancePair[0].getY() + ", " + minDistancePair[0].getZ() + " & " + minDistancePair[1].getX() + ", " + minDistancePair[1].getY() + ", " + minDistancePair[1].getZ());
+    }
+
+
 }
