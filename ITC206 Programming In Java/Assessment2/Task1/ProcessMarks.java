@@ -3,6 +3,7 @@ import java.util.Arrays;
 
 public class ProcessMarks {
     
+    // Find the maximum mark in the array
     public static int max(int[] marks) {
         int highest = marks[0];
 
@@ -15,6 +16,7 @@ public class ProcessMarks {
         return highest;
     }
 
+    // Find the minimum mark in the array
     public static int min(int[] marks) {
         int lowest = marks[0];
 
@@ -27,6 +29,7 @@ public class ProcessMarks {
         return lowest; 
     }
 
+    // Find the range of marks in the array
     public static int range(int[] marks) {
         int lowest = marks[0];
         int highest = marks[0];
@@ -43,6 +46,7 @@ public class ProcessMarks {
         return highest - lowest;
     }
 
+    // Find the mean of the marks in the array
     public static double mean(int[] marks) {
         int total = 0;
 
@@ -53,6 +57,7 @@ public class ProcessMarks {
         return (double) total / marks.length; // Return the mean as a double because java converts int division to an int by default
     }
 
+    // Find the median of the marks in the array
     public static double median(int[] marks) {
         int evenMid1 = 0;
         int evenMid2 = 0;
@@ -70,6 +75,7 @@ public class ProcessMarks {
         }
     }
 
+    // Find the mode of the marks in the array
     public static int mode(int[] marks) {
         int[] sortedMarks = Arrays.copyOf(marks, marks.length);
         Arrays.sort(sortedMarks); // Sort the array in ascending order
@@ -96,6 +102,7 @@ public class ProcessMarks {
         return highestStreakValue;
     }
 
+    // Assign grades based on the marks in the array
     public static char[] grades(int[] marks) {
         int[] gradeBoundaries = {90, 75, 60, 50, 45};
         char[] grades = {'A', 'B', 'C', 'D', 'E', 'F'};
@@ -115,6 +122,7 @@ public class ProcessMarks {
         return gradeMatch;
     }
 
+    // Find the distribution of grades in the array
     public static int[] gradeDistn(char[] grades) {
         int[] gradeDistn = new int[grades.length];
 
