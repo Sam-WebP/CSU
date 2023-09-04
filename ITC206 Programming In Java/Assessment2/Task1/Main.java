@@ -17,8 +17,8 @@ public class Main {
         int min = ProcessMarks.min(testMarks);
         int range = ProcessMarks.range(testMarks);
         double mean = ProcessMarks.mean(testMarks);
-        double median = ProcessMarks.median(testMarks); 
-        int mode = ProcessMarks.mode(testMarks); 
+        double median = ProcessMarks.median(testMarks);
+        int mode = ProcessMarks.mode(testMarks);
         char[] grades = ProcessMarks.grades(testMarks);
         int[] gradeDistn = ProcessMarks.gradeDistn(grades);
 

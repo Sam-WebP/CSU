@@ -27,6 +27,7 @@ public class TestPoint3D {
         System.out.println("p5 Y after setter: " + p5.getY());
         System.out.println("p5 Z after setter: " + p5.getZ());
         System.out.println("p5 colour after setter: " + p5.getColour());
+        System.out.println();
 
         // Initiate an array of Point3D objects:
         Point3D[] points = {p1, p2, p3, p4, p5};
@@ -35,6 +36,7 @@ public class TestPoint3D {
         max(points);
         System.out.println();
         min(points);
+        System.out.println();
 
         // Print the returned answers from the two distance methods (testing the distance method)
         System.out.println("The distance between p1 & p2 is " + p1.distance(p2)); // Distance method (Point3D object argument version)
