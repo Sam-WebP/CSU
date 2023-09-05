@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2023-09-05T02:31:56.228Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/117.0" etag="BFLiwEsco0rIHhztZaDM" version="21.7.2" type="github">
+<mxfile host="app.diagrams.net" modified="2023-09-05T03:01:05.986Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/117.0" etag="aCjgiOgqNQUl4eEmtKw2" version="21.7.2" type="github">
   <diagram name="Page-1" id="Ibva7xswk7MlykJWga5B">
     <mxGraphModel dx="860" dy="941" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
@@ -16,11 +16,11 @@
         <mxCell id="hKEHkd_DOBsOIQRfh8Hp-10" value="&lt;font style=&quot;font-size: 24px;&quot;&gt;Order Management System&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=1" parent="1" vertex="1">
           <mxGeometry x="260" y="160" width="340" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="hKEHkd_DOBsOIQRfh8Hp-13" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;&lt;b&gt;Apply Discounts and Promotions&lt;/b&gt;&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="313" y="340" width="224.5" height="80" as="geometry" />
+        <mxCell id="hKEHkd_DOBsOIQRfh8Hp-13" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;&lt;b&gt;Apply Discount Code&lt;br&gt;&lt;/b&gt;&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="250" y="370" width="142.25" height="80" as="geometry" />
         </mxCell>
         <mxCell id="hKEHkd_DOBsOIQRfh8Hp-14" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;&lt;b&gt;Place an Order&lt;/b&gt;&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="313" y="230" width="224.5" height="80" as="geometry" />
+          <mxGeometry x="317.75" y="230" width="224.5" height="80" as="geometry" />
         </mxCell>
         <mxCell id="hKEHkd_DOBsOIQRfh8Hp-15" value="&lt;font style=&quot;font-size: 18px;&quot;&gt;Guest&lt;/font&gt;" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" parent="1" vertex="1">
           <mxGeometry x="40" y="605" width="50" height="110" as="geometry" />
@@ -44,10 +44,10 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="hKEHkd_DOBsOIQRfh8Hp-37" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;&lt;b&gt;Track an Order&lt;/b&gt;&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="313" y="450" width="224.5" height="80" as="geometry" />
+          <mxGeometry x="317.75" y="480" width="224.5" height="80" as="geometry" />
         </mxCell>
         <mxCell id="hKEHkd_DOBsOIQRfh8Hp-38" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;&lt;b&gt;Initiate a Product Return or Refund&lt;/b&gt;&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="313" y="570" width="224.5" height="80" as="geometry" />
+          <mxGeometry x="317.75" y="740" width="224.5" height="80" as="geometry" />
         </mxCell>
         <mxCell id="hKEHkd_DOBsOIQRfh8Hp-39" value="&lt;font style=&quot;font-size: 18px;&quot;&gt;Marketing Department&lt;/font&gt;" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" parent="1" vertex="1">
           <mxGeometry x="720" y="450" width="50" height="110" as="geometry" />
@@ -95,6 +95,23 @@
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="120" y="550" as="sourcePoint" />
             <mxPoint x="323" y="740" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="kJCWrpa8u9t749q43092-3" value="&lt;font style=&quot;font-size: 12px;&quot;&gt;&lt;b&gt;&amp;lt;&amp;lt;extend&amp;gt;&amp;gt;&lt;/b&gt;&lt;/font&gt;" style="html=1;verticalAlign=bottom;labelBackgroundColor=none;endArrow=open;endFill=0;dashed=1;rounded=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="hKEHkd_DOBsOIQRfh8Hp-13" target="hKEHkd_DOBsOIQRfh8Hp-14">
+          <mxGeometry x="0.1258" y="-16" width="160" relative="1" as="geometry">
+            <mxPoint x="400" y="350" as="sourcePoint" />
+            <mxPoint x="560" y="350" as="targetPoint" />
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="kJCWrpa8u9t749q43092-5" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;&lt;strong&gt;Validate Discount&lt;/strong&gt;&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="470" y="370" width="142.25" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="kJCWrpa8u9t749q43092-6" value="&lt;font style=&quot;font-size: 12px;&quot;&gt;&lt;b&gt;&amp;lt;&amp;lt;include&amp;gt;&amp;gt;&lt;/b&gt;&lt;/font&gt;" style="html=1;verticalAlign=bottom;labelBackgroundColor=none;endArrow=open;endFill=0;dashed=1;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="hKEHkd_DOBsOIQRfh8Hp-13" target="kJCWrpa8u9t749q43092-5">
+          <mxGeometry width="160" relative="1" as="geometry">
+            <mxPoint x="341" y="380" as="sourcePoint" />
+            <mxPoint x="440" y="320" as="targetPoint" />
+            <mxPoint as="offset" />
           </mxGeometry>
         </mxCell>
       </root>
