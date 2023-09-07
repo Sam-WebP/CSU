@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2023-09-07T10:04:05.065Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/117.0" etag="7dE4hbVbF4VzMwKVmDLb" version="21.7.2" type="github">
+<mxfile host="app.diagrams.net" modified="2023-09-07T10:13:43.487Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/117.0" etag="bL09d1rrMAdQN9nMyLCJ" version="21.7.2" type="github">
   <diagram name="Page-1" id="2YBvvXClWsGukQMizWep">
-    <mxGraphModel dx="1322" dy="1046" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="1596" dy="1180" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -11,7 +11,7 @@
           <mxGeometry x="70.01" y="270" width="310" height="140" as="geometry" />
         </mxCell>
         <mxCell id="C371mnhvRARPkL1Xi44i-2" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="70" y="140" width="310" height="70" as="geometry" />
+          <mxGeometry x="70" y="140" width="310" height="90" as="geometry" />
         </mxCell>
         <mxCell id="aM9ryv3xv72pqoxQDRHE-7" value="viewProductDetails(productID)" style="html=1;verticalAlign=bottom;endArrow=block;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;" parent="1" edge="1">
           <mxGeometry relative="1" as="geometry">
@@ -61,11 +61,11 @@
         </mxCell>
         <mxCell id="C371mnhvRARPkL1Xi44i-11" value="displayProductReviews(productID)" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;" edge="1" parent="1">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="85" y="200" as="targetPoint" />
+            <mxPoint x="85.01" y="220" as="targetPoint" />
             <Array as="points">
-              <mxPoint x="195" y="200" />
+              <mxPoint x="195.01" y="220" />
             </Array>
-            <mxPoint x="365" y="200" as="sourcePoint" />
+            <mxPoint x="365.01" y="220" as="sourcePoint" />
             <mxPoint as="offset" />
           </mxGeometry>
         </mxCell>
@@ -113,6 +113,15 @@
         </mxCell>
         <mxCell id="C371mnhvRARPkL1Xi44i-23" value="[Add to Wishlist]" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
           <mxGeometry x="170.01" y="335" width="110" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="C371mnhvRARPkL1Xi44i-26" value="getReviews(productID)" style="html=1;verticalAlign=bottom;endArrow=block;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="80.01" y="190" as="sourcePoint" />
+            <Array as="points">
+              <mxPoint x="180.01" y="190" />
+            </Array>
+            <mxPoint x="370.01" y="190" as="targetPoint" />
+          </mxGeometry>
         </mxCell>
       </root>
     </mxGraphModel>
