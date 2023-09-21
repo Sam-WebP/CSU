@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class UserInteraction {
     
     private AccessSubjects savedSubjects;
-    private Scanner scanner;
+    private Scanner scanner = new Scanner(System.in);
 
     public UserInteraction(String filePath) {
         this.savedSubjects = new AccessSubjects(filePath);
@@ -44,14 +44,28 @@ public class UserInteraction {
         }
     }
 
-    public void interactionFlow() {
+    public void startInteraction() {
+
+        System.out.println();
         System.out.println("list of saved subjects:");
         displayAllSubjects();
+        System.out.println();
+
+        boolean continueAdding = true;
 
         if (userChoice("Do you want to add a new subject?")) {
-            addNewSubject();
+            do {
+                if (!addNewSubject()) {
+                    if (userChoice("Incorrect Code format. Do you want to try again?")) {
+                        System.out.println();
+                        continue;
+                    } else {
+                        continueAdding = false;
+                        break;
+                    }
+                }
+            } while (continueAdding && userChoice("Do you want to add another subject? "));
         }
-
     }
 
 }
