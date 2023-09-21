@@ -1,13 +1,19 @@
 package Assessment3;
 
+
+
 public class TestSubject {
     
     public static void main(String[] args) {
 
-        Subject ITC206 = new Subject("Intro to Java", "ITC206");
+        AccessSubjects savedSubjects = new AccessSubjects("Assessment3/subjects.txt");
 
-        System.out.println("Code = " + ITC206.getCode());
-        System.out.println("Name = " + ITC206.getName());
+
+        System.out.println("Before changes: " + savedSubjects.getAllSubjects());
+
+        // savedSubjects.addSubject(new Subject("THIS IS A LOL", "ABC420"));
+        // savedSubjects.writeToFile();
+
 
     }
 
