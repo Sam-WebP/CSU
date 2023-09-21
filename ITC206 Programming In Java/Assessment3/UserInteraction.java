@@ -45,27 +45,24 @@ public class UserInteraction {
     }
 
     public void startInteraction() {
-
-        System.out.println();
         System.out.println("list of saved subjects:");
         displayAllSubjects();
-        System.out.println();
+        
+        boolean userFinished = false; // Outer while loop flag
 
-        boolean continueAdding = true;
-
-        if (userChoice("Do you want to add a new subject?")) {
-            do {
-                if (!addNewSubject()) {
-                    if (userChoice("Incorrect Code format. Do you want to try again?")) {
-                        System.out.println();
-                        continue;
-                    } else {
-                        continueAdding = false;
+        while (!userFinished && userChoice("Do you want to add a new subject?")) {
+            boolean validInput = false; // Inner while loop flag
+            while (!validInput) {
+                validInput = addNewSubject();
+                if (!validInput) { // If there was an error with the code entered:
+                    if (!userChoice("Incorrect Code format. Do you want to try again?")) { // If the user doesn't want to continue:
+                        userFinished = true;   
                         break;
-                    }
+                    }   
                 }
-            } while (continueAdding && userChoice("Do you want to add another subject? "));
+            }
         }
+        savedSubjects.writeToFile();
     }
 
 }
