@@ -3,4 +3,5 @@ Systems Analysis and Design,ITC211
 Internet Technologies,ITC212
 Intro to Database Systems,ITC114
 Programming Principles,ITC106
-sfsa,ITC323
+TEST1,ITC213
+Second Test ,SEC532

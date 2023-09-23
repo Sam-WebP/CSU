@@ -6,15 +6,18 @@ import java.util.Scanner;
 
 public class AccessSubjects {
     
+    // Declare the variables for the file path and array list of saved subject 
     private String filePath;
     private ArrayList<Subject> subjects;
 
+    // Constructor for the relevant attributes to read and write data to and from a file of subjects
     public AccessSubjects(String filePath) {
         this.filePath = filePath;
         this.subjects = new ArrayList<>();
-        readFile();
+        readFile(); // Read and move data from the file to the subjects array list
     }
 
+    // Read subjects from the file and add them to the subjects array list
     public void readFile() {
         try (Scanner scanner = new Scanner(new File(filePath))) {
             while (scanner.hasNextLine()) {
@@ -27,6 +30,7 @@ public class AccessSubjects {
         }
     }
 
+    // Write subjects from the array list back to the file related to the object
     public void writeToFile() {
         try (PrintWriter pw = new PrintWriter(new FileWriter(filePath))) {
             for (Subject subject : subjects) {
@@ -37,10 +41,12 @@ public class AccessSubjects {
         }
     }
 
+    // Getter method to retrieve the subjects list
     public ArrayList<Subject> getAllSubjects() {
         return subjects;
     }
 
+    // Validates that the subject code is valid and then adds the subject to the list
     public boolean addSubject(Subject subject) {
         if (subject.isValidCode() && !subject.codeExists(subjects, subject.getCode())) {
             subjects.add(subject);

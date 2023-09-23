@@ -4,19 +4,24 @@ import java.util.Scanner;
 
 public class UserInteraction {
     
+    // Declare an AccessSubjects object variable and a scanner variable
     private AccessSubjects savedSubjects;
     private Scanner scanner = new Scanner(System.in);
 
+    // Constructor to initialise the file that the user will be interacting with
     public UserInteraction(String filePath) {
         this.savedSubjects = new AccessSubjects(filePath);
     }
 
+    // Shows the user all saved subjects
     public void displayAllSubjects() {
+        System.out.println("\nlist of saved subjects:");
         System.out.println(savedSubjects.getAllSubjects());
     }
 
+    
     public boolean addNewSubject() {
-        System.out.println("Enter the details of the new subject below:");
+        System.out.println("\nEnter the details of the new subject below:");
 
         System.out.print("Subject Name: ");
         String subjectName = scanner.nextLine();
@@ -45,20 +50,18 @@ public class UserInteraction {
     }
 
     public void startInteraction() {
-        System.out.println("list of saved subjects:");
-        displayAllSubjects();
-        
         boolean userFinished = false; // Outer while loop flag
 
-        while (!userFinished && userChoice("Do you want to add a new subject?")) {
+        while (!userFinished && userChoice("\nDo you want to add a new subject?")) {
             boolean validInput = false; // Inner while loop flag
             while (!validInput) {
+                displayAllSubjects(); // Display subjects to the user before they add another subject
                 validInput = addNewSubject();
                 if (!validInput) { // If there was an error with the code entered:
                     if (!userChoice("Incorrect Code format. Do you want to try again?")) { // If the user doesn't want to continue:
-                        userFinished = true;   
+                        userFinished = true;
                         break;
-                    }   
+                    }
                 }
             }
         }
