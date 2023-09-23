@@ -1,4 +1,4 @@
-package Assessment3;
+package Assessment3.Task1;
 
 import java.util.ArrayList;
 

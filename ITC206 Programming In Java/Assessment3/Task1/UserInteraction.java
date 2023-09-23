@@ -1,4 +1,4 @@
-package Assessment3;
+package Assessment3.Task1;
 
 import java.util.Scanner;
 
@@ -19,7 +19,7 @@ public class UserInteraction {
         System.out.println(savedSubjects.getAllSubjects());
     }
 
-    
+    // Get the required data from the user to add a new subject
     public boolean addNewSubject() {
         System.out.println("\nEnter the details of the new subject below:");
 
@@ -34,6 +34,7 @@ public class UserInteraction {
         return savedSubjects.addSubject(newSubject);
     }
 
+    // Gets a yes or no answer from the user about a question
     public boolean userChoice(String question) {
         while (true) {
             System.out.print(question + " (yes/no) ");
@@ -49,23 +50,24 @@ public class UserInteraction {
         }
     }
 
+    // Control the logic between the user and the program
     public void startInteraction() {
         boolean userFinished = false; // Outer while loop flag
 
         while (!userFinished && userChoice("\nDo you want to add a new subject?")) {
             boolean validInput = false; // Inner while loop flag
             while (!validInput) {
-                displayAllSubjects(); // Display subjects to the user before they add another subject
-                validInput = addNewSubject();
-                if (!validInput) { // If there was an error with the code entered:
-                    if (!userChoice("Incorrect Code format. Do you want to try again?")) { // If the user doesn't want to continue:
-                        userFinished = true;
-                        break;
+                displayAllSubjects(); // Display subjects to the user before they add a subject
+                validInput = addNewSubject(); // Ask the user to add a subject
+                if (!validInput) { // If there was an error with adding the subject
+                    if (!userChoice("Incorrect Code format. Do you want to try again?")) { // If the user doesn't want to try again:
+                        userFinished = true; // End the outer loop flag
+                        break; // Break out of the inner loop
                     }
                 }
             }
         }
-        savedSubjects.writeToFile();
+        savedSubjects.writeToFile(); // Writes subjects back to the file from the array list
     }
 
 }
