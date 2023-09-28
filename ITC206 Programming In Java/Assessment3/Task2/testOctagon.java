@@ -13,7 +13,7 @@ public class testOctagon {
         // Change the cloned version's length to 10 from 5
         octagonDuplicate.setSideLength(10);
 
-        // Change the original octagon's colour to green
+        // Change the original octagon's colour to green from white
         octagonOriginal.setColour("Green");
 
         System.out.println();

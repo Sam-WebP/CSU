@@ -1,17 +1,16 @@
 package Assessment3.Task2;
 
+// The below code was copied from our subject's textbook (Liang, 2019) as per our assignment's requirement.
+
 public abstract class GeometricObject {
     private String colour = "white";
     private boolean filled;
     private java.util.Date dateCreated;
 
-
-    // Construct a default geometric object
     protected GeometricObject() {
         dateCreated = new java.util.Date();
     }
 
-    // Construct a geometric object with the specified colour and filled value
     protected GeometricObject(String colour, boolean filled) {
         dateCreated = new java.util.Date();
         this.colour = colour;

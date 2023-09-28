@@ -3,3 +3,6 @@ Systems Analysis and Design,ITC211
 Internet Technologies,ITC212
 Intro to Database Systems,ITC114
 Programming Principles,ITC106
+Data Structures,ITC322
+Introductory Mathematics,MTH105
+Programming in Java 2,ITC313
