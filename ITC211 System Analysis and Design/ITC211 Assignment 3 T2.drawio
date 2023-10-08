@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2023-10-08T00:14:25.337Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/118.0" etag="Z5zXXypyUulYJXrzyjeY" version="22.0.4" type="github">
+<mxfile host="app.diagrams.net" modified="2023-10-08T00:25:07.171Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/118.0" etag="KGY4_UBKp8Or7CcdeD3B" version="22.0.4" type="github">
   <diagram name="Page-1" id="2YBvvXClWsGukQMizWep">
     <mxGraphModel dx="2314" dy="1531" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
@@ -308,6 +308,53 @@
             </Array>
             <mxPoint x="1336" y="415.76" as="sourcePoint" />
             <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="_k_QfhodpZJbX218Oy1F-1" value="chooseDeliveryMethod()" style="html=1;verticalAlign=bottom;endArrow=block;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="631" y="740" as="sourcePoint" />
+            <Array as="points">
+              <mxPoint x="671" y="740" />
+            </Array>
+            <mxPoint x="851" y="740" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="_k_QfhodpZJbX218Oy1F-2" value="calculateShippingCost(address)" style="html=1;verticalAlign=bottom;endArrow=block;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="860" y="780" as="sourcePoint" />
+            <Array as="points">
+              <mxPoint x="900" y="780" />
+            </Array>
+            <mxPoint x="2060" y="780" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="_k_QfhodpZJbX218Oy1F-3" value="returnShippingCost()" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;" edge="1" parent="1">
+          <mxGeometry x="0.0016" relative="1" as="geometry">
+            <mxPoint x="860" y="820" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="1635" y="820.22" />
+            </Array>
+            <mxPoint x="2060" y="820" as="sourcePoint" />
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="_k_QfhodpZJbX218Oy1F-4" value="displayTotalCost()" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;" edge="1" parent="1">
+          <mxGeometry x="0.0016" relative="1" as="geometry">
+            <mxPoint x="640" y="860" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="675" y="860" />
+            </Array>
+            <mxPoint x="855" y="860" as="sourcePoint" />
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="_k_QfhodpZJbX218Oy1F-5" value="setPaymentDetails()" style="html=1;verticalAlign=bottom;endArrow=block;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="636" y="910" as="sourcePoint" />
+            <Array as="points">
+              <mxPoint x="676" y="910" />
+            </Array>
+            <mxPoint x="1580" y="910" as="targetPoint" />
           </mxGeometry>
         </mxCell>
       </root>
