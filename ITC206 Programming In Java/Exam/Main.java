@@ -1,62 +1,19 @@
 package Exam;
 
 import java.util.Date;
+import java.util.Scanner;
 
 public class Main {
     
     public static void main(String[] args) {
 
+        for (int i = 0;i < 16; i+=3) {
+            for (int j = 1;j<i; j++) {
+              System.out.print("v");
+               j++;
+            }
+            System.out.println();
+          }   
     }
-
-    public class Account {
-
-        private String accountNumber;
-        private double balance;
-        private double annualIntRate;
-        private Date dateCreated;
     
-        public Account() {
-            this.accountNumber = "AC000";
-            this.balance = 0;
-            this.annualIntRate = 0;
-            this.dateCreated = new Date();
-        }
-    
-        public Account(String accountNumber, double balance) {
-            this.accountNumber = accountNumber;
-            this.balance = balance;
-            this.annualIntRate = 0;
-            this.dateCreated = new Date();
-        }
-    
-        // Accessor methods (getters)
-        public String getAccountNumber() {
-            return accountNumber;
-        }
-    
-        public double getBalance() {
-            return balance;
-        }
-    
-        public double getAnnualIntRate() {
-            return annualIntRate;
-        }
-    
-        public Date getDateCreated() {
-            return dateCreated;
-        }
-    
-        // Mutator methods (setters)
-        public void setAccountNumber(String accountNumber) {
-            this.accountNumber = accountNumber;
-        }
-    
-        public void setBalance(double balance) {
-            this.balance = balance;
-        }
-    
-        public void setAnnualIntRate(double annualIntRate) {
-            this.annualIntRate = annualIntRate;
-        }
-    }
 }
