@@ -1,6 +1,15 @@
 package task1;
 public class Rotation {
 
+    /**
+     * Performs a left rotation on an array with the specified d number of positions 
+     * by using a reverse operation to achieve the desired outcome
+     * with optimal time and space complexity.
+     *
+     * @param arr The array that will be rotated.
+     * @param d The number of positions to rotate the array to the left.
+     * @return The rotated array.
+     */
     public static int[] leftRotation(int[] arr, int d) {
         int n = arr.length;
         
@@ -13,11 +22,21 @@ public class Rotation {
         return arr;
     }
 
+    /**
+     * Reverses a portion of the array from the 'start' to the 'end' indexes.
+     *
+     * @param arr The array where the elements are going to be reversed.
+     * @param start The starting index of the portion are going to be reversed.
+     * @param end The ending index of the portion to be reversed.
+     */
     private static void reverse(int[] arr, int start, int end) {
         while (start < end) {
+            // Swap the elements at the start and end
             int temp = arr[start];
             arr[start] = arr[end];
             arr[end] = temp;
+
+            // Move towards the center to be reversed
             start++;
             end--;
         }

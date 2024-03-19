@@ -3,20 +3,26 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
-public class Task2 {
+/**
+ * The Main class demonstrates operations on a singly linked list,
+ * which includes insertion, reversal, and printing of the list.
+ */
+
+public class Main {
 
 	/**
-	 * @author ??
-	 *
-	 */
+     * The SinglyLinkedListNode class represents a node in a singly linked list.
+     */
 	static class SinglyLinkedListNode{
 		public int data;
 		public SinglyLinkedListNode next;
 
 		/**
-		 * @param initialData
-		 * @param link
-		 */
+         * Constructs a new SinglyLinkedListNode with the given data and next node.
+         *
+         * @param initialData the data value of the node
+         * @param link        the reference to the next node
+         */
 		public SinglyLinkedListNode(int initialData, SinglyLinkedListNode link) {
 			data = initialData;
 			next = link;
@@ -24,23 +30,24 @@ public class Task2 {
 	}
 
 	/**
-	 * @author ??
-	 *
-	 */
+     * The SinglyLinkedList class represents a singly linked list.
+     */
 	static class SinglyLinkedList{
 		public SinglyLinkedListNode head;
 		public SinglyLinkedListNode tail;
 
 		/**
-		 * 
-		 */
+   		 * Constructor to create an empty singly linked list.
+   		 */
 		public SinglyLinkedList() {
 			head = null;
 			tail = null;
 		}
 
 		/**
-		 * @param nodeData
+		 * Inserts a new node containing the given data at the end of the linked list.
+		 *
+		 * @param nodeData the data to be inserted
 		 */
 		public void insertNodeAtEnd(int nodeData) {
 			SinglyLinkedListNode node = new SinglyLinkedListNode(nodeData, null);
@@ -53,13 +60,12 @@ public class Task2 {
 			tail = node;
 		}
 
-		// add additional methods if you need to
-
-
 		/**
-		 * @param head
-		 * @return
-		 */
+         * Reverses the singly linked list.
+         *
+         * @param head the head of the list
+         * @return the head of the reversed list
+         */
 		public static SinglyLinkedListNode reverse (SinglyLinkedListNode head) {
 			SinglyLinkedListNode prev = null;
             SinglyLinkedListNode cur = head;
@@ -76,25 +82,24 @@ public class Task2 {
 		}
 
 		/**
-		 * @param head
+		 * Prints the data of each node in the linked list.
+		 *
+		 * @param head the head node of the linked list to print
 		 */
 		public static void printLinkedList(SinglyLinkedListNode head) {
-			// you need to complete this method
-			// this method should print a linked list starting from head, value should 
-			//      be printed (in console) in a line separated by a space, for example, 10 20 30 40,
 			while (head != null) {
                 System.out.print(head.data + " ");
                 head = head.next;
             }
             System.out.println();
-
 		}
 
 		/**
-		 * @param s
-		 */
+         * Initialises the singly linked list with data read from a scanner.
+         *
+         * @param s the scanner to read data from
+         */
 		public void initializeList(Scanner s) {
-			// you need to complete this method
 			int n = s.nextInt();
             for (int i = 0; i < n; i++) {
                 int data = s.nextInt();
@@ -104,12 +109,13 @@ public class Task2 {
 	}
 
 	/**
-	 * @param args
-	 * @throws FileNotFoundException
-	 */
+     * The main method is the entry point of the program.
+     *
+     * @param args command-line arguments (not used)
+     */
 	public static void main(String[] args) throws FileNotFoundException {
 
-		File file = new File("task2.txt");
+		File file = new File("task2/task2.txt");
 		Scanner sc = new Scanner(file); //read data from a file
 		//Scanner sc = new Scanner(System.in); //read data from console
 
