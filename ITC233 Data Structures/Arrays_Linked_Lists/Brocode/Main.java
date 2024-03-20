@@ -71,7 +71,7 @@ public class Main {
 
     System.out.println("LinkedList: \t" + elapsedTime + " ns");
 
-   // ********************* ArrayList ********************* //
+   /// ********************* ArrayList ********************* ///
 
    startTime = System.nanoTime();
    //arrayList.get(0); //5320
