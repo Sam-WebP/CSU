@@ -1,0 +1,20 @@
+@keyframes textGradientAnimation {
+    0% {
+      background-position: 0% 50%;
+    }
+    100% {
+      background-position: 200% 50%;
+    }
+  }
+  
+  .animated-gradient-text {
+    display: inline-flex;
+    font-size: 1.25rem; /* Approximation of Tailwind's text-xl */
+    background-image: linear-gradient(to right, #b2a8fd, #5847c7, #b0aae2);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: textGradientAnimation 5s linear infinite;
+  }
+  
