@@ -1,0 +1,52 @@
+#navbar {
+    background-color: rgba(19, 0, 26, 0.5); /* Semi-transparent background */
+    backdrop-filter: blur(10px); /* Creates the glass effect */
+    -webkit-backdrop-filter: blur(10px); /* For Safari compatibility */
+    border: 1px solid rgba(255, 255, 255, 0.25); /* Optional: subtle border for more glassy effect */
+    overflow: hidden;
+    z-index: 100;
+    position: sticky;
+    top: 20px;
+    display: flex;
+    align-self: center;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 700px;
+    width: 90%;
+    border-radius: 15px;
+    padding-left: 20px;
+    padding-right: 20px;
+    box-shadow: 0 4px 20px rgba(49, 0, 76, 0.57);
+}
+
+.nav-logo {
+    color: white;
+}
+
+.nav-phone {
+    color: white;
+}
+
+
+#navbar ul {
+    list-style-type: none; /* No bullets */
+    margin: 0;
+    padding: 0;
+}
+
+#navbar li {
+    float: left; /* Align the menu items horizontally */
+}
+
+#navbar li a {
+    display: block;
+    color: white; /* Text color */
+    text-align: center;
+    padding: 14px 16px; /* Padding to increase the clickable area */
+    text-decoration: none; /* No underlines on links */
+}
+
+#navbar li a:hover {
+    background-color: #ddd; /* Color change on hover */
+    color: black; /* Text color change on hover */
+}
