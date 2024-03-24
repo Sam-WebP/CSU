@@ -9,7 +9,6 @@
   
   .animated-gradient-text {
     display: inline-flex;
-    font-size: 1.25rem; /* Approximation of Tailwind's text-xl */
     background-image: linear-gradient(to right, #b2a8fd, #5847c7, #b0aae2);
     background-size: 200% auto;
     -webkit-background-clip: text;

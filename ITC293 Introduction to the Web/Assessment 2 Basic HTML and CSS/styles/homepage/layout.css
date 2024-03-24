@@ -23,6 +23,11 @@ body {
         no-repeat, repeat, repeat; /* The fade effect shouldn't repeat, but the grid should */
 }
 
+.intro-text h1 {
+    color: white;
+    font-size: 3rem;
+}
+
 .dotted-background {
     position: absolute;
     top: 0;
@@ -53,3 +58,27 @@ body {
     background-size: 14px 24px;
 }
 
+.headshot-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding-right: 20px; /* Adjust based on your layout and image size */
+    margin: 15px;
+}
+
+.headshot {
+    width: 3rem; /* Adjust based on your image's dimensions */
+    position: absolute;
+    top: -10px; /* Moves the image up, outside the div */
+    right: -20px; /* Adjust based on how much you want the image to overlap */
+    border-radius: 100%; /* Optional: creates a circular image */
+    z-index: 2; /* Ensures the image overlaps adjacent elements if necessary */
+}
+
+.intro-text {
+    
+    padding: 20px; /* Adds space around the text and image */
+    position: relative;
+    z-index: 1; /* Ensures the text background is below the image */
+}
