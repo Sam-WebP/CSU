@@ -14,14 +14,30 @@
     margin: 0;
 }
 
-.subheading {
-    font-size: 20px; /* Subheading */
-    color: #b0aae2; /* Subtle color for the subheading */
-    margin: 10px 0;
+#hero-section {
+    display: flex;
+    justify-content: center;
+    margin-top: 5rem;
 }
 
-.extra-space {
-    height: 500px;
+.intro-text {
+    display: flex;
+    flex-direction: column;
+    max-width: 900px;
+}
+
+.intro-text h1 {
+    color: white;
+    font-size: 3rem;
+    text-align: center;
+}
+
+.subheading {
+    font-size: 20px; /* Subheading */
+    font-style: italic;
+    color: #f00a61; /* Subtle color for the subheading */
+    margin: 10px 0;
+    text-align: center;
 }
 
 .hero-image-container {

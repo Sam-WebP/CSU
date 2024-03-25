@@ -5,10 +5,12 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Home</title>
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+        <link href="/node_modules/cal-sans/fonts/webfonts/CalSans-SemiBold.woff2" rel="stylesheet">
         <link rel="stylesheet" href="../styles/homepage/layout.css">
         <link rel="stylesheet" href="../styles/homepage/hero-section.css">
         <link rel="stylesheet" href="../styles/typography/animated-gradient-text.css">
         <link rel="stylesheet" href="../styles/components/nav-bar.css">
+        <link rel="stylesheet" href="../styles/components/dust-particles.css">
         <!-- Document description: Healthcare Drone Company Portfolio - Main Page. Created by Samuel Moran, 21/03/2024. -->
     </head>
     <body>
@@ -22,24 +24,56 @@
                 </ul>
             <div class="nav-phone">0412 988 339</div>
         </nav>
-        <section class="hero-section">
-            <div class="intro-text">
-                <h1>
-                    👋Hey, my name is <span class="animated-gradient-text">Samuel Moran
-                        <span class="headshot-container">
-                            <img src="../images/homepage/headshot-white.png" alt="Samuel Moran" class="headshot">
+        <div class="page-wrapper">
+            <section id="hero-section">
+                <div class="intro-text">
+                    <h1>
+                        Hey👋, my name is <span class="orange-gradient-text">Samuel Moran
+                            <span class="headshot-container">
+                                <img src="../images/homepage/headshot-white.png" alt="Samuel Moran" class="headshot">
+                            </span>
                         </span>
-                    </span>
-                    and I'm a <span class="animated-gradient-text">full-stack developer</span>💻
-                </h1>
-                <p class="subheading">Delivering urgent medical supplies and vaccines to the most remote areas, faster than ever before.</p>
+                        and I'm a <span class="green-gradient-text">full-stack developer</span>💻
+                    </h1>
+                    <blockquote class="subheading">
+                        "The best way to predict the future is to invent it."
+                        <footer>— <cite>Alan Kay</cite></footer>
+                    </blockquote>
+                </div>
+            </section>
+            
+            <section class="learn-more">
+                <div class="container">
+                    <div class="box">
+                      <span></span>
+                      <div class="content">
+                        <h2>About</h2>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                        <a href="#">Read More</a>
+                      </div>
+                    </div>
+                    <div class="box">
+                      <span></span>
+                      <div class="content">
+                        <h2>Web Skills</h2>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                        <a href="#">Read More</a>
+                      </div>
+                    </div>
+                    <div class="box">
+                      <span></span>
+                      <div class="content">
+                        <h2>Resume</h2>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                        <a href="#">Read More</a>
+                      </div>
+                    </div>
+                  </div>
+                
+            </section>
+    
             </div>
-            <div class="hero-image-container">
-                <img src="../images/homepage/Drone Hero Section.webp" alt="Drone delivering healthcare supplies">
-            </div>
-        </section>
-        <div class="extra-space">
-
         </div>
+        
     </body>
 </html>
