@@ -51,16 +51,7 @@ body::before {
     z-index: -1; /* Adjust the z-index if needed to ensure visibility */
 }
 
-.dotted-background {
-    position: absolute;
-    top: 0;
-    z-index: -2;
-    width: 100vw;
-    height: 100vh;
-    background-color: #000000;
-    background-image: radial-gradient(#ffffff33 1px, #00091d 1px);
-    background-size: 20px 20px;
-}
+
 
 /* Outer div styles */
 .relative-container {

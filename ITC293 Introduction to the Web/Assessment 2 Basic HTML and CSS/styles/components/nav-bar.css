@@ -1,5 +1,5 @@
 #navbar {
-    background-color: rgba(19, 0, 26, 0.5); /* Semi-transparent background */
+    background-color: rgba(0, 0, 0, 0.075); /* Semi-transparent background */
     backdrop-filter: blur(10px); /* Creates the glass effect */
     -webkit-backdrop-filter: blur(10px); /* For Safari compatibility */
     border: 1px solid rgba(255, 255, 255, 0.25); /* Optional: subtle border for more glassy effect */
@@ -16,7 +16,7 @@
     border-radius: 15px;
     padding-left: 20px;
     padding-right: 20px;
-    box-shadow: 0 4px 20px rgba(49, 0, 76, 0.57);
+    box-shadow: 0 4px 20px rgba(254, 254, 254, 0.181);
 }
 
 .nav-logo {
