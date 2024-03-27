@@ -10,7 +10,9 @@
 
 body {
   --color: rgba(30, 30, 30);
-  --bgColor: rgb(248, 241, 241);
+  --bgColor: rgba(0, 0, 0, 0.236);
+  --card-top-color: rgb(255, 255, 255);
+  --card-top-color-text: rgb(0, 0, 0);
 }
 
 #timeline ul {
@@ -56,8 +58,8 @@ body {
   height: var(--dateH);
   margin-inline: calc(var(--inlineP) * -1);
   text-align: center;
-  background-color: var(--accent-color);
-  color: white;
+  background-color: var(--card-top-color);
+  color: var(--card-top-color-text);
   font-size: 1.25rem;
   font-weight: 700;
   display: grid;
@@ -71,7 +73,7 @@ body {
   content: "";
   width: var(--inlineP);
   aspect-ratio: 1;
-  background: var(--accent-color);
+  background: var(--card-top-color);
   background-image: linear-gradient(rgba(0, 0, 0, 0.2) 100%, transparent);
   position: absolute;
   top: 100%;
@@ -99,6 +101,7 @@ body {
   background: var(--bgColor);
   position: relative;
   padding-inline: 1.5rem;
+  color: white;
 }
 #timeline ul li .title {
   overflow: hidden;

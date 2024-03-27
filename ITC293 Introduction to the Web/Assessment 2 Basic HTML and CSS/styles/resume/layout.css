@@ -178,7 +178,7 @@ body {
 }
 
 .gradient {
-  --size: 250px; /* Initial size of the gradient */
+  --size: 100%; /* Initial size of the gradient */
   --speed: 50s; /* Animation duration */
   --easing: cubic-bezier(0.8, 0.2, 0.2, 0.8); /* Animation timing function */
 
