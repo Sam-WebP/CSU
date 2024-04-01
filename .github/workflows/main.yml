@@ -25,9 +25,9 @@ jobs:
           # You can use whatever directory your project uses, for example "wwwroot".
           # Such a directory does *not* have to already exist in your repo,
           # it could be an output directory created dynamically by your static website builder.
-          source-directory: .
+          source-directory: 'CSU/ITC293 Introduction to the Web/Assessment 2 Basic HTML and CSS/pages'
 
           # Optional. Default value "gh-pages".
           # It specifies the temporary branch which hosts the static website.
           # Each build will OVERWRITE this branch.
-          target-branch: ITC293 Introduction to the Web/Assessment 2 Basic HTML and CSS/pages
+          target-branch: gh-pages
