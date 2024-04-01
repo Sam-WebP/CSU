@@ -1,52 +1,98 @@
+/* Reset default styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Navbar styles */
 #navbar {
-    background-color: rgba(0, 0, 0, 0.075); /* Semi-transparent background */
-    backdrop-filter: blur(10px); /* Creates the glass effect */
-    -webkit-backdrop-filter: blur(10px); /* For Safari compatibility */
-    border: 1px solid rgba(255, 255, 255, 0.25); /* Optional: subtle border for more glassy effect */
-    overflow: hidden;
+    background-color: rgba(0, 0, 0, 0.075);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.25);
     z-index: 100;
     position: sticky;
     top: 20px;
     display: flex;
-    align-self: center;
     justify-content: space-between;
     align-items: center;
     max-width: 700px;
     width: 90%;
     border-radius: 15px;
-    padding-left: 20px;
-    padding-right: 20px;
+    padding: 20px;
     box-shadow: 0 4px 20px rgba(254, 254, 254, 0.181);
 }
 
-.nav-logo {
+.nav-logo, .nav-phone {
     color: white;
 }
 
-.nav-phone {
+.hamburger {
+    display: none;
+    cursor: pointer;
+}
+
+.hamburger-line {
+    width: 25px;
+    height: 3px;
+    background-color: white;
+    margin: 6px 0;
+}
+
+.nav-links {
+    display: flex;
+    list-style-type: none;
+}
+
+.nav-links li {
+    margin-left: 20px;
+}
+
+.nav-links a {
     color: white;
+    text-decoration: none;
+    padding: 10px;
 }
 
-
-#navbar ul {
-    list-style-type: none; /* No bullets */
-    margin: 0;
-    padding: 0;
+.nav-links a:hover {
+    background-color: #ddd;
+    color: black;
 }
 
-#navbar li {
-    float: left; /* Align the menu items horizontally */
-}
+@media screen and (max-width: 768px) {
+    .hamburger {
+        display: block;
+    }
 
-#navbar li a {
-    display: block;
-    color: white; /* Text color */
-    text-align: center;
-    padding: 14px 16px; /* Padding to increase the clickable area */
-    text-decoration: none; /* No underlines on links */
-}
+    .nav-links {
+        position: absolute;
+        top: 80px;
+        left: 0;
+        width: 100%;
+        background-color: rgba(0, 0, 0, 0.852);
+        z-index: 999;
+        padding: 10px;
+        flex-direction: column;
+        display: none; /* This rule hides .nav-links */
+    }
 
-#navbar li a:hover {
-    background-color: #ddd; /* Color change on hover */
-    color: black; /* Text color change on hover */
+    /* This should come after the .nav-links block */
+    .nav-links.show {
+        display: flex; /* This will force it to display */
+    }
+
+    .nav-links li {
+        margin-left: 0;
+        margin-bottom: 10px;
+    }
+
+    .nav-links a {
+        display: block;
+        padding: 10px;
+    }
+
+    .nav-links a:hover {
+        background-color: #555;
+    }
 }

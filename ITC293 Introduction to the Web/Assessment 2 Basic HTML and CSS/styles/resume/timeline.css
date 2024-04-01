@@ -8,7 +8,7 @@
 
 body {
   --color: rgba(30, 30, 30);
-  --bgColor: rgb(0, 0, 0);
+  --bgColor: rgba(0, 0, 0, 0.261);
   --card-top-color: rgb(255, 255, 255);
   --card-top-color-text: rgb(0, 0, 0);
   --card-border-width: 1px;
