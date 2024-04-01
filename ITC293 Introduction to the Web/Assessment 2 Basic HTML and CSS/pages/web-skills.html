@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Web Skills</title>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+        <!-- <link rel="stylesheet" href="../styles/homepage/layout.css"> -->
+        <link rel="stylesheet" href="../styles/components/nav-bar.css">
+        <!-- Document description: Healthcare Drone Company Portfolio - Main Page. Created by Samuel Moran, 21/03/2024. -->
+    </head>
+    <body>
+        <nav id="navbar">
+            <div class="nav-logo">Logo</div>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="web-skills.html">Web Skills</a></li>
+                    <li><a href="resume.html">Resume</a></li>
+                </ul>
+            <div class="nav-phone">0412 988 339</div>
+        </nav>
+        
+        <div class="page-wrapper">
+
+            <div class="intro-text">
+                <h1 class="green-gradient-text">Web Skills</h1>
+            </div>
+
+            <div class="front-end-container">
+                <div class="skill-title">
+                    <h2>Front-end Technologies</h2>
+                </div>
+                <div class="skill-1">
+                    <h3>HTML/CSS</h3>
+                    <p>Proficient in creating semantic, accessible, and responsive web pages using HTML5 and CSS3.</p>
+                </div>
+                <div class="skill-2">
+                    <h3>JavaScript</h3>
+                    <p>Experienced in writing clean, efficient, and maintainable JavaScript code for interactive web experiences.</p>
+                </div>
+                <div class="skill-3">
+                    <h3>React</h3>
+                    <p>Skilled in developing dynamic and reusable user interfaces using the React library.</p>
+                </div>
+                <div class="skill-4">
+                    <h3>Tailwind</h3>
+                    <p>Adept at utilizing the Tailwind CSS framework for rapid and consistent UI development.</p>
+                </div>
+            </div>
+
+            <div class="back-end-container">
+                <div class="skill-title">
+                    <h2>Back-end Technologies</h2>
+                </div>
+                <div class="skill-1">
+                    <h3>Python</h3>
+                    <p>Proficient in developing server-side applications and scripts using Python.</p>
+                </div>
+                <div class="skill-2">
+                    <h3>Django</h3>
+                    <p>Experienced in building scalable and secure web applications with the Django framework.</p>
+                </div>
+                <div class="skill-3">
+                    <h3>Node.js</h3>
+                    <p>Skilled in creating server-side solutions and RESTful APIs using Node.js.</p>
+                </div>
+                <div class="skill-4">
+                    <h3>Express</h3>
+                    <p>Familiar with building web applications and APIs using the Express framework for Node.js.</p>
+                </div>
+            </div>
+
+            <div class="databases-container">
+                <div class="skill-title">
+                    <h2>Databases</h2>
+                </div>
+                <div class="skill-1">
+                    <h3>MongoDB</h3>
+                    <p>Experienced in designing and managing NoSQL databases using MongoDB.</p>
+                </div>
+                <div class="skill-2">
+                    <h3>MySQL</h3>
+                    <p>Proficient in working with relational databases and writing efficient SQL queries using MySQL.</p>
+                </div>
+                <div class="skill-3">
+                    <h3>SQL</h3>
+                    <p>Strong understanding of SQL principles and ability to write complex queries for data manipulation and retrieval.</p>
+                </div>
+                <div class="skill-4">
+                    <!-- Empty div for grid alignment -->
+                </div>
+            </div>
+
+            <div class="tools-container">
+                <div class="skill-title">
+                    <h2>Tools and Platforms</h2>
+                </div>
+                <div class="skill-1">
+                    <h3>Docker</h3>
+                    <p>Skilled in containerizing applications and managing multi-container environments using Docker.</p>
+                </div>
+                <div class="skill-2">
+                    <h3>AWS</h3>
+                    <p>Certified Cloud Practitioner with experience in deploying and managing applications on Amazon Web Services.</p>
+                </div>
+                <div class="skill-3">
+                    <h3>GitHub / Git</h3>
+                    <p>Proficient in version control and collaborative development using Git and GitHub.</p>
+                </div>
+                <div class="skill-4">
+                    <h3>Linux</h3>
+                    <p>Comfortable working in Linux environments and familiar with command-line interfaces.</p>
+                </div>
+            </div>
+        </div>
+    </body>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+    
+        body {
+            font-family: 'Inter';
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            min-height: 100vh;
+            background-color: #000000;
+            background-image: linear-gradient(45deg, #01011a 10%, #1c1c30 50%, #01011a 80%);
+            overflow-x: hidden;
+            padding: 10px;
+        }
+    
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            background-image: 
+                linear-gradient(to bottom left, transparent, #01011a),
+                linear-gradient(to right, #01011a 1px, transparent 1px),
+                linear-gradient(to bottom, #01011a 1px, transparent 1px);
+            background-size: 100% 100%, 14px 24px, 14px 24px;
+            background-repeat: no-repeat, repeat, repeat;
+            pointer-events: none;
+        }
+    
+        .page-wrapper {
+            margin-top: 3rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100vw;
+            --bento-border: 1px solid #7979ff1a;
+            --bento-background-color: #05051653;
+            --bento-border-radius: 20px;
+        }
+    
+        .intro-text {
+            display: flex;
+            flex-direction: column;
+            max-width: 900px;
+            margin: 3rem;
+        }
+    
+        .intro-text h1 {
+            font-size: 3rem;
+            text-align: center;
+            color: white;
+        }
+    
+        .front-end-container,
+        .back-end-container,
+        .databases-container,
+        .tools-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-template-rows: 0.4fr repeat(2, 1fr);
+            gap: 5px;
+            grid-template-areas:
+                "skill-title skill-title"
+                "skill-1 skill-2"
+                "skill-3 skill-4";
+            height: 400px;
+            width: 1000px;
+            margin: 2rem;
+        }
+    
+        .skill-title {
+            grid-area: skill-title;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    
+        .skill-title h2 {
+            font-size: 2rem;
+            color: white;
+        }
+    
+        .skill-1 { grid-area: skill-1; }
+        .skill-2 { grid-area: skill-2; }
+        .skill-3 { grid-area: skill-3; }
+        .skill-4 { grid-area: skill-4; }
+    
+        .skill-1,
+        .skill-2,
+        .skill-3,
+        .skill-4 {
+            display: grid;
+            grid-template-rows: 1fr 2fr;
+            border: var(--bento-border);
+            border-radius: var(--bento-border-radius);
+            background-color: var(--bento-background-color);
+            transition: background-color 1s ease;
+            position: relative;
+        }
+
+        .skill-1 h3,
+        .skill-2 h3,
+        .skill-3 h3,
+        .skill-4 h3 {
+            font-size: 1.5rem;
+            color: white;
+            text-align: center;
+            margin-top: 1rem;
+        }
+
+        .skill-1 p,
+        .skill-2 p,
+        .skill-3 p,
+        .skill-4 p {
+            font-size: 1rem;
+            color: white;
+            text-align: center;
+            margin: 1rem;
+        }
+    </style>
+</html>

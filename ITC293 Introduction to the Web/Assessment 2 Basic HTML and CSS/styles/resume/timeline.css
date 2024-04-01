@@ -1,4 +1,3 @@
-
 *,
 *::before,
 *::after {
@@ -13,12 +12,25 @@ body {
   --card-top-color: rgb(255, 255, 255);
   --card-top-color-text: rgb(0, 0, 0);
   --card-border-width: 1px;
-  --card-border-color: rgba(255, 255, 255, 0.144);
-  --circle-color: linear-gradient(to bottom, rgba(255, 255, 255, 0) 11%, rgba(22, 198, 12, 1) 68%, rgba(22, 198, 12, 1) 100%);
+  --text-color: white;
+  --border-color: rgba(255, 255, 255, 0.144);
+  --shadow-color: rgba(0, 0, 0, 0.5);
+  --title-font-size: 1.25rem;
+  --title-font-weight: 700;
+  --descr-font-weight: 300;
+  --card-padding-inline: 1.5rem;
+  --card-padding-block-start: 1.5rem;
+  --card-padding-block-end: 1rem;
+  --descr-padding-block-end: 1.5rem;
+  --item-margin-bottom: 8px;
+  --border-radius: 10px;
+  --shadow-width: 90%;
+  --shadow-height: 0.5rem;
+  --shadow-blur: 4px;
 }
 
 #timeline ul {
-  --col-gap: 2rem;
+  --col-gap: 3rem;
   --row-gap: 2rem;
   --line-w: 0.25rem;
   display: grid;
@@ -54,24 +66,25 @@ body {
   grid-template-rows: min-content min-content min-content;
 }
 
-/* date */
-#timeline ul li .date {
+/* job title */
+#timeline ul li .job-title {
   --dateH: 3rem;
   height: var(--dateH);
   margin-inline: calc(var(--inlineP) * -1);
   text-align: center;
   background-color: var(--card-top-color);
   color: var(--card-top-color-text);
-  font-size: 1.25rem;
-  font-weight: 700;
+  font-size: var(--title-font-size);
+  font-weight: var(--title-font-weight);
   display: grid;
   place-content: center;
   position: relative;
   border-radius: calc(var(--dateH) / 2) 0 0 calc(var(--dateH) / 2);
+  box-shadow: 0 -5px 20px rgba(255, 255, 255, 0.351);
 }
 
-/* date flap */
-#timeline ul li .date::before {
+/* job title flap */
+#timeline ul li .job-title::before {
   content: "";
   width: var(--inlineP);
   aspect-ratio: 1;
@@ -84,13 +97,18 @@ body {
 }
 
 /* circle */
-#timeline ul li .date::after {
-  content: "";
+#timeline ul li .job-title::after {
+  content: attr(data-date);
   position: absolute;
-  width: 2rem;
-  aspect-ratio: 1;
+  width: 4rem;
+  aspect-ratio: 1.4;
   background: white;
-  border-radius: 50%;
+  border-radius: var(--border-radius);
+  display: grid;
+  place-items: center;
+  color: black;
+  font-size: var(--title-font-size);
+  font-weight: var(--title-font-weight);
   top: 50%;
   transform: translate(50%, -50%);
   right: calc(100% + var(--col-gap) + var(--line-w) / 2);
@@ -101,45 +119,43 @@ body {
 #timeline ul li .descr {
   background: var(--bgColor);
   position: relative;
-  padding-inline: 1.5rem;
-  color: white;
+  padding-inline: var(--card-padding-inline);
+  color: var(--text-color);
 }
 #timeline ul li .title {
   overflow: hidden;
-  padding-block-start: 1.5rem;
-  padding-block-end: 1rem;
-  font-weight: 500;
+  padding-block-start: var(--card-padding-block-start);
+  padding-block-end: var(--card-padding-block-end);
+  font-weight: var(--descr-font-weight);
 }
 #timeline ul li .descr {
-  --border-bottom-radius: 10px;
-  padding-block-end: 1.5rem;
-  font-weight: 300;
-  border-bottom-left-radius: var(--border-bottom-radius);
-  border-bottom-right-radius: var(--border-bottom-radius);
+  padding-block-end: var(--descr-padding-block-end);
+  font-weight: var(--descr-font-weight);
+  border-bottom-left-radius: var(--border-radius);
+  border-bottom-right-radius: var(--border-radius);
 }
 
 #timeline .title {
   display: flex;
-  align-items: flex-start; /* Aligns items to the top, useful for multiline text */
-  margin-bottom: 8px; /* Space between each point */
+  align-items: flex-start;
   flex-direction: column;
 }
 
 .emoji-title {
-  margin-right: 12px; /* Space between the tick and the text */
-  font-size: 20px; /* Adjust the size of the tick as needed */
+  margin-right: 12px;
+  font-size: 20px;
 }
 
 #timeline .descr {
   border-style: none solid solid;
   border-width: var(--card-border-width);
-  border-color: var(--card-border-color);
+  border-color: var(--border-color);
 }
 
 #timeline .title {
   border-style: none solid;
   border-width: var(--card-border-width);
-  border-color: var(--card-border-color);
+  border-color: var(--border-color);
 }
 
 /* shadows */
@@ -147,12 +163,12 @@ body {
 #timeline ul li .descr::before {
   content: "";
   position: absolute;
-  width: 90%;
-  height: 0.5rem;
-  background: rgba(0, 0, 0, 0.5);
+  width: var(--shadow-width);
+  height: var(--shadow-height);
+  background: var(--shadow-color);
   left: 50%;
   border-radius: 50%;
-  filter: blur(4px);
+  filter: blur(var(--shadow-blur));
   transform: translate(-50%, 50%);
 }
 #timeline ul li .title::before {
@@ -165,27 +181,28 @@ body {
 }
 
 .descr .item-content {
-    display: flex;
-    align-items: flex-start; /* Aligns items to the top, useful for multiline text */
-    margin-bottom: 8px; /* Space between each point */
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: var(--item-margin-bottom);
 }
 
 .descr .tick {
-    margin-right: 12px; /* Space between the tick and the text */
-    font-size: 20px; /* Adjust the size of the tick as needed */
+  margin-right: 12px;
+  font-size: 20px;
 }
 
 .descr .item-text {
-    flex: 1; /* Ensures the text takes up the remaining space */
-    margin: 0; /* Resets default margins */
+  flex: 1;
+  margin: 0;
 }
 
-@media (min-width: 40rem) {
+@media (min-width: 55rem) {
   #timeline ul {
     grid-template-columns: 1fr var(--line-w) 1fr;
   }
   #timeline ul::before {
     grid-column: 2;
+    grid-row: 1 / span 2;
   }
   #timeline ul li:nth-child(odd) {
     grid-column: 1;
@@ -199,24 +216,16 @@ body {
     grid-row: 2/4;
   }
 
-  #timeline ul li:nth-child(odd) .date::before {
+  #timeline ul li:nth-child(odd) .job-title::before {
     clip-path: polygon(0 0, 100% 0, 100% 100%);
     left: 0;
   }
 
-  #timeline ul li:nth-child(odd) .date::after {
+  #timeline ul li:nth-child(odd) .job-title::after {
     transform: translate(-50%, -50%);
     left: calc(100% + var(--col-gap) + var(--line-w) / 2);
   }
-  #timeline ul li:nth-child(odd) .date {
+  #timeline ul li:nth-child(odd) .job-title {
     border-radius: 0 calc(var(--dateH) / 2) calc(var(--dateH) / 2) 0;
   }
-}
-
-.credits {
-  margin-top: 1rem;
-  text-align: right;
-}
-.credits a {
-  color: var(--color);
 }
