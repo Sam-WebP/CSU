@@ -1,7 +1,13 @@
 import java.io.*;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Objects;
 import java.util.Scanner;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Social network as a graph where nodes are individuals and edges are the connections between them.
@@ -312,6 +318,61 @@ public class SocialNetwork {
         }
         // Optionally clear the name label
         graph.getVertexLabels()[index] = null;
+    }
+
+    // Task 6 - print all members in social network
+
+    public void printAllMembers() {
+        if (graph == null || graph.getVertexLabels() == null || graph.getVertexLabels().length == 0) {
+            System.out.println("The network is empty.");
+            return;
+        }
+
+        String[] labels = graph.getVertexLabels();
+
+        List<Member> members = getSortedMembers();
+
+        System.out.println("Report Name: All Members Sorted by Popularity and Name:");
+        System.out.println(String.format("%-20s %s", "Name", "Number of Friends"));
+        members.forEach(member -> System.out.println(String.format("%-20s %d", member.getName(), member.getFriendCount())));
+    }
+
+    private List<Member> getSortedMembers() {
+    return Arrays.stream(graph.getVertexLabels())
+                 .filter(Objects::nonNull)  // Filters out any null labels.
+                 .map(label -> new Member(label, countFriends(label)))  // Creates a new Member object for each label.
+                 .sorted(Comparator.comparing(Member::getFriendCount).reversed()  // First sort by friend count, descending.
+                                     .thenComparing(Member::getName))  // Then sort by name if friend counts are equal.
+                 .collect(Collectors.toList());  // Collect results into a list.
+    }
+
+    private int countFriends(String name) {
+        int index = findIndexByName(name);
+        int count = 0;
+        for (int i = 0; i < graph.getVertexLabels().length; i++) {
+            if (graph.getAdjacencyMatrix()[index][i] == 1) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    private class Member {
+        private String name;
+        private int friendCount;
+
+        public Member(String name, int friendCount) {
+            this.name = name;
+            this.friendCount = friendCount;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public int getFriendCount() {
+            return friendCount;
+        }
     }
     
 }

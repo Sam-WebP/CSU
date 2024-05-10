@@ -21,6 +21,9 @@ public class Main {
 
         // Task 5
         // network.promptToDeleteMember();
+
+        // Task 6
+        network.printAllMembers();
              
         
     }
