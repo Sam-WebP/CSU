@@ -7,23 +7,21 @@ public class Main {
         SocialNetwork network = new SocialNetwork();
         network.loadNetwork("index.txt", "friend.txt");
 
-        Scanner scanner = new Scanner(System.in);
-        //System.out.print("Enter a name to list their friends: ");
-        System.out.print("Enter a name to list their friends and friends' friends: ");
-        String name = scanner.nextLine();
-        
-        // network.listFriends(name);
-        network.listExtendedNetwork(name);
-        scanner.close();
-        // For testing: print adjacency matrix
-        // int[][] matrix = network.getGraph().getAdjacencyMatrix();
-        // for (int i = 0; i < matrix.length; i++) {
-        //     for (int j = 0; j < matrix[i].length; j++) {
-        //         System.out.print(matrix[i][j] + " ");
-        //     }
-        //     System.out.println();
-        // }
+        // Task 1
+        // network.printAdjacencyMatrix();
 
+        // Task 2
+        // network.promptToFindFriends();
+
+        // Task 3
+        // network.promptToFindFriendsOfFriends();
+        
+        // Task 4
+        // network.promptToFindCommonFriends();
+
+        // Task 5
+        // network.promptToDeleteMember();
+             
         
     }
 }

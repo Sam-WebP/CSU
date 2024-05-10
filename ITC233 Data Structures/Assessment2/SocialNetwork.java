@@ -1,5 +1,6 @@
 import java.io.*;
 import java.util.HashSet;
+import java.util.Scanner;
 import java.util.Set;
 
 /**
@@ -76,7 +77,40 @@ public class SocialNetwork {
         return graph;
     }
 
+    // For testing: print adjacency matrix
+    public void printAdjacencyMatrix() {
+        int[][] matrix = getGraph().getAdjacencyMatrix();
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[i].length; j++) {
+                System.out.print(matrix[i][j] + " ");
+            }
+            System.out.println();
+        }
+    }
+    
+    private int findIndexByName(String name) {
+        name = name.toLowerCase();
+        String[] labels = graph.getVertexLabels();
+        for (int i = 0; i < labels.length; i++) {
+            if (labels[i].toLowerCase().equals(name)) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
     ////// Task 2 - friends list //////
+
+    public void promptToFindFriends() {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Enter a name to list their friends: ");
+        String name = scanner.nextLine();
+
+        listFriends(name);
+        
+        scanner.close();
+    }
 
     public void listFriends(String name) {
         if (graph == null || graph.getVertexLabels().length == 0) {
@@ -91,17 +125,6 @@ public class SocialNetwork {
         }
 
         printFriends(index);
-    }
-
-    private int findIndexByName(String name) {
-        name = name.toLowerCase();
-        String[] labels = graph.getVertexLabels();
-        for (int i = 0; i < labels.length; i++) {
-            if (labels[i].toLowerCase().equals(name)) {
-                return i;
-            }
-        }
-        return -1;
     }
 
     private void printFriends(int index) {
@@ -121,6 +144,17 @@ public class SocialNetwork {
     }
 
     ////// Task 3 - friends and friends' of friends list  //////
+
+    public void promptToFindFriendsOfFriends() {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Enter a name to list their friends and friends' friends: ");
+        String name = scanner.nextLine();
+        
+        listExtendedNetwork(name);
+        
+        scanner.close();
+    }
 
     public void listExtendedNetwork(String name) {
         if (graph == null || graph.getVertexLabels().length == 0) {
@@ -170,6 +204,114 @@ public class SocialNetwork {
                 results.add(labels[k]);
             }
         }
+    }
+
+    ////// Task 4 - common friends //////
+
+    public void promptToFindCommonFriends() {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Enter the first name to find common friends: ");
+        String name1 = scanner.nextLine();
+
+        System.out.print("Enter the second name to find common friends: ");
+        String name2 = scanner.nextLine();
+
+        showCommonFriends(name1, name2);
+
+        scanner.close();
+    }
+    
+    public void showCommonFriends(String name1, String name2) {
+        if (graph == null || graph.getVertexLabels().length == 0) {
+            System.out.println("The network is empty.");
+            return;
+        }
+
+        Set<String> friendsName1 = getFriendsOf(name1);
+        Set<String> friendsName2 = getFriendsOf(name2);
+
+        if (friendsName1 == null || friendsName2 == null) {
+            if (friendsName1 == null) {
+                System.out.println("The name '" + name1 + "' does not exist in the network.");
+            }
+            if (friendsName2 == null) {
+                System.out.println("The name '" + name2 + "' does not exist in the network.");
+            }
+            return;
+        }
+
+        friendsName1.retainAll(friendsName2); // Intersection of two sets
+
+        if (friendsName1.isEmpty()) {
+            System.out.println(name1 + " and " + name2 + " have no common friends.");
+        } else {
+            System.out.println(name1 + " and " + name2 + " both know:");
+            friendsName1.forEach(System.out::println);
+        }
+    }
+
+    private Set<String> getFriendsOf(String name) {
+        int index = findIndexByName(name);
+        if (index == -1) {
+            return null; // Name does not exist
+        }
+
+        Set<String> friends = new HashSet<>();
+        int[][] matrix = graph.getAdjacencyMatrix();
+        String[] labels = graph.getVertexLabels();
+
+        for (int j = 0; j < matrix[index].length; j++) {
+            if (matrix[index][j] == 1) {
+                friends.add(labels[j]);
+            }
+        }
+        return friends;
+    }
+
+    ////// Task 5 - delete a member //////                                                        
+                                                             
+    public void promptToDeleteMember() {
+        if (graph == null || graph.getVertexLabels().length == 0) {
+            System.out.println("The network is empty.");
+            return;
+        }
+
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter the name of the member to delete: ");
+        String name = scanner.nextLine();
+
+        if (!confirmDeletion(name, scanner)) {
+            System.out.println("Deletion cancelled.");
+            scanner.close();
+            return;
+        }
+
+        deleteMember(name);
+        System.out.println(name + " has been successfully deleted from the network.");
+        scanner.close();
+    }
+
+    private boolean confirmDeletion(String name, Scanner scanner) {
+        System.out.println("Are you sure you want to delete " + name + " and all their connections? (y/n)");
+        String response = scanner.nextLine();
+        return response.equalsIgnoreCase("y");
+    }
+
+    private void deleteMember(String name) {
+        int index = findIndexByName(name);
+        if (index == -1) {
+            System.out.println("The name '" + name + "' does not exist in the network.");
+            return;
+        }
+
+        // Removing all connections of this person
+        for (int i = 0; i < graph.getVertexLabels().length; i++) {
+            graph.getAdjacencyMatrix()[index][i] = 0;
+            graph.getAdjacencyMatrix()[i][index] = 0;
+        }
+        // Optionally clear the name label
+        graph.getVertexLabels()[index] = null;
     }
     
 }
