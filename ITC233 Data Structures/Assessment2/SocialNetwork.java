@@ -15,6 +15,12 @@ import java.util.stream.Collectors;
  */
 public class SocialNetwork {
     private Graph graph;
+    private String indexFilePath;  // Field to store the path of the index file
+    private String friendFilePath;  // Field to store the path of the friend file
+
+    public SocialNetwork() {
+        this.graph = new Graph(0);  // Initialize with no vertices; adjusted as needed
+    }
 
     /**
      * Load network data from the index and friend files.
@@ -23,11 +29,13 @@ public class SocialNetwork {
      * @param friendFile File path that contains the edge data.
      */
     public void loadNetwork(String indexFile, String friendFile) {
-        try { //
-            loadIndexFile(indexFile); // Load the indexFile
-            loadFriendFile(friendFile); // Load the friendFile
+        this.indexFilePath = indexFile;  // Store the index file path
+        this.friendFilePath = friendFile;  // Store the friend file path
+        try {
+            loadIndexFile(indexFile);
+            loadFriendFile(friendFile);
         } catch (IOException e) {
-            System.err.println("Error reading files: " + e.getMessage()); // If there are any I/O errors with reading the files, print the error message
+            System.err.println("Error reading files: " + e.getMessage());
         }
     }
 
@@ -39,18 +47,18 @@ public class SocialNetwork {
      * @throws IOException If an I/O error occurs reading from the file.
      */
     private void loadIndexFile(String indexFile) throws IOException {
-        BufferedReader reader = new BufferedReader(new FileReader(indexFile)); // Create a reader to efficiently read the indexFile
-        int vertexCount = Integer.parseInt(reader.readLine().trim()); // Get the first line from the indexFile, trim any white spaces around this line and then convert this string into an int
-        graph = new Graph(vertexCount); // Create a Graph object based on the number of vertices found
+        BufferedReader reader = new BufferedReader(new FileReader(indexFile));
+        int vertexCount = Integer.parseInt(reader.readLine().trim());
+        this.graph = new Graph(vertexCount);  // Reinitialize graph with the correct number of vertices
 
-        for (int i = 0; i < vertexCount; i++) { // Loop that starts on the second line of the indexFile as the first line has already been read
-            String line = reader.readLine().trim(); // Store current line in the line variable
-            String[] parts = line.split(" "); // Split the line into two parts and store within the parts array
-            int vertexIndex = Integer.parseInt(parts[0]); // Use the first element of the parts array to get the vertex index 
-            String vertexName = parts[1]; // Use the second element of the parts array to get the vertex name
-            graph.setLabel(vertexIndex, vertexName); // setLabel method uses the index and name to assign a label to the vertex at the given index
+        for (int i = 0; i < vertexCount; i++) {
+            String line = reader.readLine().trim();
+            String[] parts = line.split(" ");
+            int vertexIndex = Integer.parseInt(parts[0]);
+            String vertexName = parts[1];
+            graph.setLabel(vertexIndex, vertexName);
         }
-        reader.close(); // Closes the reader to avoid resource leaks
+        reader.close();
     }
 
     /**
@@ -61,17 +69,17 @@ public class SocialNetwork {
      * @throws IOException If an I/O error occurs reading from the file.
      */
     private void loadFriendFile(String friendFile) throws IOException {
-        BufferedReader reader = new BufferedReader(new FileReader(friendFile)); // Create a reader to efficiently read the friendFile
-        int numberOfEdges = Integer.parseInt(reader.readLine().trim()); // Get the first line from the friendFile, trim any white spaces around this line and then convert this string into an int
+        BufferedReader reader = new BufferedReader(new FileReader(friendFile));
+        int numberOfEdges = Integer.parseInt(reader.readLine().trim());
 
-        for (int i = 0; i < numberOfEdges; i++) { // Loop starts on the second line of the friendFile as the first line has already been read
-            String line = reader.readLine().trim(); // Store current line in the line variable
-            String[] parts = line.split(" "); // Split the line into two parts and store within the parts array
-            int vertex1 = Integer.parseInt(parts[0]); // Use the first element of the parts array to get the first vertex index 
-            int vertex2 = Integer.parseInt(parts[1]); // Use the second element of the parts array to get the second vertex index 
-            graph.addEdge(vertex1, vertex2); // addEdge method uses both vertex indices to add an edge to the graph
+        for (int i = 0; i < numberOfEdges; i++) {
+            String line = reader.readLine().trim();
+            String[] parts = line.split(" ");
+            int vertex1 = Integer.parseInt(parts[0]);
+            int vertex2 = Integer.parseInt(parts[1]);
+            graph.addEdge(vertex1, vertex2);
         }
-        reader.close(); // Closes the reader to avoid resource leaks
+        reader.close();
     }
 
     /**
@@ -107,15 +115,10 @@ public class SocialNetwork {
 
     ////// Task 2 - friends list //////
 
-    public void promptToFindFriends() {
-        Scanner scanner = new Scanner(System.in);
-
+    public void promptToFindFriends(Scanner scanner) {
         System.out.print("Enter a name to list their friends: ");
         String name = scanner.nextLine();
-
         listFriends(name);
-        
-        scanner.close();
     }
 
     public void listFriends(String name) {
@@ -151,15 +154,10 @@ public class SocialNetwork {
 
     ////// Task 3 - friends and friends' of friends list  //////
 
-    public void promptToFindFriendsOfFriends() {
-        Scanner scanner = new Scanner(System.in);
-
+    public void promptToFindFriendsOfFriends(Scanner scanner) {
         System.out.print("Enter a name to list their friends and friends' friends: ");
         String name = scanner.nextLine();
-        
         listExtendedNetwork(name);
-        
-        scanner.close();
     }
 
     public void listExtendedNetwork(String name) {
@@ -214,18 +212,12 @@ public class SocialNetwork {
 
     ////// Task 4 - common friends //////
 
-    public void promptToFindCommonFriends() {
-        Scanner scanner = new Scanner(System.in);
-
+    public void promptToFindCommonFriends(Scanner scanner) {
         System.out.print("Enter the first name to find common friends: ");
         String name1 = scanner.nextLine();
-
         System.out.print("Enter the second name to find common friends: ");
         String name2 = scanner.nextLine();
-
         showCommonFriends(name1, name2);
-
-        scanner.close();
     }
     
     public void showCommonFriends(String name1, String name2) {
@@ -277,25 +269,22 @@ public class SocialNetwork {
 
     ////// Task 5 - delete a member //////                                                        
                                                              
-    public void promptToDeleteMember() {
+    public void promptToDeleteMember(Scanner scanner) {
         if (graph == null || graph.getVertexLabels().length == 0) {
             System.out.println("The network is empty.");
             return;
         }
 
-        Scanner scanner = new Scanner(System.in);
         System.out.print("Enter the name of the member to delete: ");
         String name = scanner.nextLine();
 
         if (!confirmDeletion(name, scanner)) {
             System.out.println("Deletion cancelled.");
-            scanner.close();
             return;
         }
 
         deleteMember(name);
         System.out.println(name + " has been successfully deleted from the network.");
-        scanner.close();
     }
 
     private boolean confirmDeletion(String name, Scanner scanner) {
@@ -316,7 +305,7 @@ public class SocialNetwork {
             graph.getAdjacencyMatrix()[index][i] = 0;
             graph.getAdjacencyMatrix()[i][index] = 0;
         }
-        // Optionally clear the name label
+        // Clear the name label
         graph.getVertexLabels()[index] = null;
     }
 
