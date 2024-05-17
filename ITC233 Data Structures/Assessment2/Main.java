@@ -20,7 +20,7 @@ public class Main {
             System.out.println("\nWelcome to the Social Network Manager");
             System.out.println("1. Load a new network");
             System.out.println("2. List all friends of a member");
-            System.out.println("3. List all friends and friends' friends of a member");
+            System.out.println("3. List all friends and friends friends of a member");
             System.out.println("4. List common friends of two members");
             System.out.println("5. Delete a member from the network");
             System.out.println("6. List all members sorted by popularity");

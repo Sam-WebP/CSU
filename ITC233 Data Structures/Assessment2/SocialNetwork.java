@@ -1,17 +1,14 @@
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Scanner;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
- * Social network as a graph where nodes are individuals and edges are the connections between them.
+ * Represents a social network as an undirected graph where nodes are individuals and edges are the connections between them.
  * This class provides methods to load the network data from files and to access and manipulate the graph.
  */
 public class SocialNetwork {
+    private static final String DEFAULT_INDEX_FILE = "index.txt";
+    private static final String DEFAULT_FRIEND_FILE = "friend.txt";
     private Graph graph;  // The graph representing the social network
 
     /**
@@ -32,13 +29,17 @@ public class SocialNetwork {
         try {
             loadIndexFile(indexFile);
             loadFriendFile(friendFile);
+        } catch (FileNotFoundException e) {
+            System.err.println("File not found: " + e.getMessage());
         } catch (IOException e) {
             System.err.println("Error reading files: " + e.getMessage());
+        } catch (NumberFormatException e) {
+            System.err.println("File format error: " + e.getMessage());
         }
     }
 
     /**
-     * Uses the index file to load the vertices and their labels and transfers the vertices to the graph.
+     * Loads the index file to load the vertices.
      * Each line of the index file after the first is expected to contain a vertex index followed by its label.
      * 
      * @param indexFile The file path for the index file to be read.
@@ -50,17 +51,25 @@ public class SocialNetwork {
         this.graph = new Graph(vertexCount);  // Reset the graph with the correct number of vertices
 
         for (int i = 0; i < vertexCount; i++) {
-            String line = reader.readLine().trim();
-            String[] parts = line.split(" ");
-            int vertexIndex = Integer.parseInt(parts[0]);
-            String vertexName = parts[1];
-            graph.setLabel(vertexIndex, vertexName);
+            parseVertex(reader.readLine().trim());
         }
         reader.close();
     }
 
     /**
-     * Friendship connections get read from the friend file and edges are added to the graph.
+     * Parses a line from the index file to set the vertex label.
+     * 
+     * @param line The line containing the vertex index and label.
+     */
+    private void parseVertex(String line) {
+        String[] parts = line.split(" ");
+        int vertexIndex = Integer.parseInt(parts[0]);
+        String vertexName = parts[1];
+        graph.setLabel(vertexIndex, vertexName);
+    }
+
+    /**
+     * Loads the friend file to populate the edges.
      * Each line of the friend file after the first is a pair of vertex indices that are connected by an edge.
      * 
      * @param friendFile The file path for the friend file to be read.
@@ -71,14 +80,22 @@ public class SocialNetwork {
         int numberOfEdges = Integer.parseInt(reader.readLine().trim());
 
         for (int i = 0; i < numberOfEdges; i++) {
-            String line = reader.readLine().trim();
-            String[] parts = line.split(" ");
-            int vertex1 = Integer.parseInt(parts[0]);
-            int vertex2 = Integer.parseInt(parts[1]);
-            graph.addEdge(vertex1, vertex2);
-            graph.addEdge(vertex2, vertex1); // Add the edge in both directions for undirected graph
+            parseEdge(reader.readLine().trim());
         }
         reader.close();
+    }
+
+    /**
+     * Parses a line from the friend file to add an undirected edge to the graph.
+     * 
+     * @param line The line containing the pair of vertex indices.
+     */
+    private void parseEdge(String line) {
+        String[] parts = line.split(" ");
+        int vertex1 = Integer.parseInt(parts[0]);
+        int vertex2 = Integer.parseInt(parts[1]);
+        graph.addEdge(vertex1, vertex2);
+        graph.addEdge(vertex2, vertex1); // Add the edge in both directions for undirected graph
     }
 
     /**
@@ -96,7 +113,7 @@ public class SocialNetwork {
         int size = graph.size();
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
-                System.out.print((graph.isEdge(i, j) ? 1 : 0) + " "); // Print 1 the edge is between vertex i and j, if not, print 0
+                System.out.print((graph.isEdge(i, j) ? 1 : 0) + " ");
             }
             System.out.println();
         }
@@ -113,7 +130,7 @@ public class SocialNetwork {
         int size = graph.size();
         for (int i = 0; i < size; i++) {
             Object label = graph.getLabel(i);
-            if (label != null && label.toString().toLowerCase().equals(name)) { // A case insensitive check to see if the label is not null and matches the name
+            if (label != null && label.toString().toLowerCase().equals(name)) {
                 return i;
             }
         }
@@ -122,14 +139,21 @@ public class SocialNetwork {
 
     /**
      * Prompts the user to enter an index.txt and friend.txt file to load the network.
+     * Uses default files if user does not provide a file path.
      * 
      * @param scanner The scanner to read user input.
      */
     public void promptToLoadNetwork(Scanner scanner) {
-        System.out.print("Enter the path for the index file: ");
+        System.out.print("Enter the path for the index file (press enter to use default): ");
         String indexFile = scanner.nextLine();
-        System.out.print("Enter the path for the friend file: ");
+        if (indexFile.isEmpty()) {
+            indexFile = DEFAULT_INDEX_FILE;
+        }
+        System.out.print("Enter the path for the friend file (press enter to use default): ");
         String friendFile = scanner.nextLine();
+        if (friendFile.isEmpty()) {
+            friendFile = DEFAULT_FRIEND_FILE;
+        }
         loadNetwork(indexFile, friendFile);
     }
 
@@ -183,23 +207,23 @@ public class SocialNetwork {
         }
     }
 
-    ////// Task 3 - friends and friends' of friends list  //////
+    ////// Task 3 - friends and friends of friends list  //////
 
     /**
-     * Prompts the user to enter a name and lists their friends and their friends' friends.
+     * Prompts the user to enter a name and lists their friends and their friends friends.
      * 
      * @param scanner The scanner to read user input.
      */
     public void promptToFindFriendsOfFriends(Scanner scanner) {
-        System.out.print("Enter a name to list their friends and friends' friends: ");
+        System.out.print("Enter a name to list their friends and friends friends: ");
         String name = scanner.nextLine();
         listExtendedNetwork(name);
     }
 
     /**
-     * Lists the friends and friends' friends of a given person by their name.
+     * Lists the friends and friends friends of a given person by their name.
      * 
-     * @param name The name of the person whose friends and friends' friends are to be listed.
+     * @param name The name of the person whose friends and friends friends are to be listed.
      */
     public void listExtendedNetwork(String name) {
         if (graph == null || graph.size() == 0) {
@@ -223,7 +247,7 @@ public class SocialNetwork {
     }
 
     /**
-     * Finds the extended network (friends and friends' friends) of a vertex specified by its index.
+     * Finds the extended network (friends and friends friends) of a vertex specified by its index.
      * 
      * @param index The index of the vertex.
      * @return A set of names representing the extended network.
@@ -416,7 +440,7 @@ public class SocialNetwork {
 
         System.out.println("Report Name: All Members Sorted by Popularity and Name:");
         System.out.println(String.format("%-20s %s", "Name", "Number of Friends"));
-        members.forEach(member -> System.out.println(String.format("%-20s %d", member.getName(), member.getFriendCount()))); // Print the members name and the number of friends
+        members.forEach(member -> System.out.println(String.format("%-20s %d", member.getName(), member.getFriendCount())));
     }
 
     /**
@@ -431,14 +455,14 @@ public class SocialNetwork {
         for (int i = 0; i < size; i++) {
             Object label = graph.getLabel(i);
             if (label != null) {
-                members.add(new Member(label.toString(), countFriends(label.toString()))); // Create a new object with the vertex label and the number of friends, and add it to the members list
+                members.add(new Member(label.toString(), countFriends(label.toString())));
             }
         }
 
-        return members.stream() // Sort the members list by the number of friends (largest to smallest), then by name (smallest to largest)
+        return members.stream()
                 .sorted(Comparator.comparing(Member::getFriendCount).reversed()
                         .thenComparing(Member::getName))
-                .collect(Collectors.toList()); // Collect the sorted members into a list and return it
+                .collect(Collectors.toList());
     }
 
     /**
