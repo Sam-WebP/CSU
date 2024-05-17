@@ -1,7 +1,5 @@
 import java.util.Scanner;
 
-// Still need to fix null errors on operations after a name is deleted from the the network.
-
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
