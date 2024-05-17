@@ -1,12 +1,22 @@
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
+/**
+ * The Main class represents the command-line interface for users to interact with the social network.
+ */
 public class Main {
+    /**
+     * The main method creates a Scanner object to read user input and a SocialNetwork object to manage the network.
+     * A menu of options are presented to the user to execute the selected option until the user chooses to exit.
+     */
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         SocialNetwork network = new SocialNetwork();
         boolean exit = false;
 
+        // Main loop to display menu and handle user input until user chooses to exit
         while (!exit) {
+            // Display menu options
             System.out.println("\nWelcome to the Social Network Manager");
             System.out.println("1. Load a new network");
             System.out.println("2. List all friends of a member");
@@ -17,16 +27,21 @@ public class Main {
             System.out.println("7. Exit");
             System.out.print("Choose an option: ");
 
-            int choice = scanner.nextInt();
-            scanner.nextLine();  // Consume newline
+            int choice;
+            try {
+                choice = scanner.nextInt(); // Read user's choice
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input. Please enter a valid integer option."); // Handle invalid input (non-integer value)
+                scanner.nextLine(); // Clear the invalid input from the scanner
+                continue; // Restart the loop
+            }
 
+            scanner.nextLine();
+
+            // Execute the selected option based on user's choice by running the relevant prompt method
             switch (choice) {
                 case 1:
-                    System.out.print("Enter the path for the index file: ");
-                    String indexFile = scanner.nextLine();
-                    System.out.print("Enter the path for the friend file: ");
-                    String friendFile = scanner.nextLine();
-                    network.loadNetwork(indexFile, friendFile);
+                    network.promptToLoadNetwork(scanner);
                     break;
                 case 2:
                     network.promptToFindFriends(scanner);
@@ -45,14 +60,15 @@ public class Main {
                     break;
                 case 7:
                     exit = true;
-                    break;
+                    break;// Exit the application
                 default:
+                    // Handle invalid option
                     System.out.println("Invalid option, please choose again.");
                     break;
             }
         }
 
-        scanner.close(); // Close scanner only once at the end of all operations
+        scanner.close();
         System.out.println("Exiting program...");
     }
 }
