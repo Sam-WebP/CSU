@@ -1,11 +1,8 @@
 import java.io.*;
-import java.lang.reflect.Field;
-import java.util.Arrays;
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Objects;
 import java.util.Scanner;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -16,8 +13,6 @@ import java.util.stream.Collectors;
  */
 public class SocialNetwork {
     private Graph graph;
-    private String indexFilePath;  // Field to store the path of the index file
-    private String friendFilePath;  // Field to store the path of the friend file
 
     public SocialNetwork() {
         this.graph = new Graph(0);  // Initialize with no vertices; adjusted as needed
@@ -30,8 +25,6 @@ public class SocialNetwork {
      * @param friendFile File path that contains the edge data.
      */
     public void loadNetwork(String indexFile, String friendFile) {
-        this.indexFilePath = indexFile;  // Store the index file path
-        this.friendFilePath = friendFile;  // Store the friend file path
         try {
             loadIndexFile(indexFile);
             loadFriendFile(friendFile);
@@ -95,10 +88,10 @@ public class SocialNetwork {
 
     // For testing: print adjacency matrix
     public void printAdjacencyMatrix() {
-        boolean[][] matrix = getEdges();
-        for (int i = 0; i < matrix.length; i++) {
-            for (int j = 0; j < matrix[i].length; j++) {
-                System.out.print((matrix[i][j] ? 1 : 0) + " ");
+        int size = graph.size();
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                System.out.print((graph.isEdge(i, j) ? 1 : 0) + " ");
             }
             System.out.println();
         }
@@ -106,9 +99,10 @@ public class SocialNetwork {
     
     private int findIndexByName(String name) {
         name = name.toLowerCase();
-        Object[] labels = getLabels();
-        for (int i = 0; i < labels.length; i++) {
-            if (labels[i] != null && labels[i].toString().toLowerCase().equals(name)) {
+        int size = graph.size();
+        for (int i = 0; i < size; i++) {
+            Object label = graph.getLabel(i);
+            if (label != null && label.toString().toLowerCase().equals(name)) {
                 return i;
             }
         }
@@ -124,7 +118,7 @@ public class SocialNetwork {
     }
 
     public void listFriends(String name) {
-        if (graph == null || getLabels().length == 0) {
+        if (graph == null || graph.size() == 0) {
             System.out.println("The network is empty.");
             return;
         }
@@ -139,18 +133,14 @@ public class SocialNetwork {
     }
 
     private void printFriends(int index) {
-        boolean[][] matrix = getEdges();
-        Object[] labels = getLabels();
-        boolean foundFriends = false;
-        System.out.println(labels[index] + " is friends with:");
-        for (int j = 0; j < matrix.length; j++) {
-            if (matrix[index][j]) {
-                System.out.println(labels[j]);
-                foundFriends = true;
-            }
-        }
-        if (!foundFriends) {
+        int[] neighbors = graph.neighbors(index);
+        System.out.println(graph.getLabel(index) + " is friends with:");
+        if (neighbors.length == 0) {
             System.out.println("This person has no friends listed.");
+        } else {
+            for (int neighbor : neighbors) {
+                System.out.println(graph.getLabel(neighbor));
+            }
         }
     }
 
@@ -163,7 +153,7 @@ public class SocialNetwork {
     }
 
     public void listExtendedNetwork(String name) {
-        if (graph == null || getLabels().length == 0) {
+        if (graph == null || graph.size() == 0) {
             System.out.println("The network is empty.");
             return;
         }
@@ -190,24 +180,20 @@ public class SocialNetwork {
     }
 
     private void addFriendsToSet(int index, Set<String> results) {
-        boolean[][] matrix = getEdges();
-        Object[] labels = getLabels();
+        int[] neighbors = graph.neighbors(index);
 
-        for (int j = 0; j < matrix[index].length; j++) {
-            if (matrix[index][j]) {
-                results.add(labels[j].toString());
-                addFriendsOfFriendsToSet(j, index, results);
-            }
+        for (int neighbor : neighbors) {
+            results.add(graph.getLabel(neighbor).toString());
+            addFriendsOfFriendsToSet(neighbor, index, results);
         }
     }
 
     private void addFriendsOfFriendsToSet(int friendIndex, int originalIndex, Set<String> results) {
-        boolean[][] matrix = getEdges();
-        Object[] labels = getLabels();
+        int[] friendsOfFriend = graph.neighbors(friendIndex);
 
-        for (int k = 0; k < matrix[friendIndex].length; k++) {
-            if (matrix[friendIndex][k] && k != originalIndex) {
-                results.add(labels[k].toString());
+        for (int friendOfFriend : friendsOfFriend) {
+            if (friendOfFriend != originalIndex) {
+                results.add(graph.getLabel(friendOfFriend).toString());
             }
         }
     }
@@ -223,7 +209,7 @@ public class SocialNetwork {
     }
     
     public void showCommonFriends(String name1, String name2) {
-        if (graph == null || getLabels().length == 0) {
+        if (graph == null || graph.size() == 0) {
             System.out.println("The network is empty.");
             return;
         }
@@ -258,13 +244,10 @@ public class SocialNetwork {
         }
 
         Set<String> friends = new HashSet<>();
-        boolean[][] matrix = getEdges();
-        Object[] labels = getLabels();
+        int[] neighbors = graph.neighbors(index);
 
-        for (int j = 0; j < matrix[index].length; j++) {
-            if (matrix[index][j]) {
-                friends.add(labels[j].toString());
-            }
+        for (int neighbor : neighbors) {
+            friends.add(graph.getLabel(neighbor).toString());
         }
         return friends;
     }
@@ -272,7 +255,7 @@ public class SocialNetwork {
     ////// Task 5 - delete a member //////                                                        
                                                              
     public void promptToDeleteMember(Scanner scanner) {
-        if (graph == null || getLabels().length == 0) {
+        if (graph == null || graph.size() == 0) {
             System.out.println("The network is empty.");
             return;
         }
@@ -303,24 +286,26 @@ public class SocialNetwork {
         }
 
         // Removing all connections of this person
-        boolean[][] matrix = getEdges();
-        for (int i = 0; i < getLabels().length; i++) {
-            matrix[index][i] = false;
-            matrix[i][index] = false;
+        int size = graph.size();
+        for (int i = 0; i < size; i++) {
+            if (graph.isEdge(index, i)) {
+                graph.removeEdge(index, i);
+            }
+            if (graph.isEdge(i, index)) {
+                graph.removeEdge(i, index);
+            }
         }
         // Clear the name label
-        getLabels()[index] = null;
+        graph.setLabel(index, null);
     }
 
     // Task 6 - print all members in social network
 
     public void printAllMembers() {
-        if (graph == null || getLabels() == null || getLabels().length == 0) {
+        if (graph == null || graph.size() == 0) {
             System.out.println("The network is empty.");
             return;
         }
-
-        Object[] labels = getLabels();
 
         List<Member> members = getSortedMembers();
 
@@ -330,27 +315,35 @@ public class SocialNetwork {
     }
 
     private List<Member> getSortedMembers() {
-        return Arrays.stream(getLabels())
-                .filter(Objects::nonNull)  // Filters out any null labels.
-                .map(label -> new Member(label.toString(), countFriends(label.toString())))  // Creates a new Member object for each label.
-                .sorted(Comparator.comparing(Member::getFriendCount).reversed()  // First sort by friend count, descending.
-                        .thenComparing(Member::getName))  // Then sort by name if friend counts are equal.
-                .collect(Collectors.toList());  // Collect results into a list.
+        List<Member> members = new ArrayList<>();
+        int size = graph.size();
+
+        for (int i = 0; i < size; i++) {
+            Object label = graph.getLabel(i);
+            if (label != null) {
+                members.add(new Member(label.toString(), countFriends(label.toString())));
+            }
+        }
+
+        return members.stream()
+                .sorted(Comparator.comparing(Member::getFriendCount).reversed()
+                        .thenComparing(Member::getName))
+                .collect(Collectors.toList());
     }
 
     private int countFriends(String name) {
         int index = findIndexByName(name);
         int count = 0;
-        boolean[][] matrix = getEdges();
-        for (int i = 0; i < getLabels().length; i++) {
-            if (matrix[index][i]) {
+        int[] neighbors = graph.neighbors(index);
+        for (int neighbor : neighbors) {
+            if (graph.isEdge(index, neighbor)) {
                 count++;
             }
         }
         return count;
     }
 
-    private class Member {
+    private static class Member {
         private String name;
         private int friendCount;
 
@@ -365,27 +358,6 @@ public class SocialNetwork {
 
         public int getFriendCount() {
             return friendCount;
-        }
-    }
-
-    // Reflection-based methods to access private fields of Graph
-    private boolean[][] getEdges() {
-        try {
-            Field field = Graph.class.getDeclaredField("edges");
-            field.setAccessible(true);
-            return (boolean[][]) field.get(graph);
-        } catch (NoSuchFieldException | IllegalAccessException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    private Object[] getLabels() {
-        try {
-            Field field = Graph.class.getDeclaredField("labels");
-            field.setAccessible(true);
-            return (Object[]) field.get(graph);
-        } catch (NoSuchFieldException | IllegalAccessException e) {
-            throw new RuntimeException(e);
         }
     }
 }
