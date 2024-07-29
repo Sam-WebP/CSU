@@ -1,14 +1,22 @@
-package A1.task2;
+package task2;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Scanner;
 
+/**
+ * Manages a collection of Product objects by allowing products
+ * to be added, displayed in sorted lists, find the highest-priced product,
+ * and clone the entire collection.
+ */
 public class ProductManager {
     private ArrayList<Product> products = new ArrayList<>();
     private Scanner scanner = new Scanner(System.in);
 
+    /**
+     * User inputs product info to be added.
+     */
     public void addProduct() {
         System.out.print("Enter product name: ");
         String name = scanner.nextLine();
@@ -21,6 +29,9 @@ public class ProductManager {
         System.out.println("Product added successfully.");
     }
 
+    /**
+     * Displays the products sorted by name (ascending).
+     */
     public void displaySortedByName() {
         Collections.sort(products);
         System.out.println("Products sorted by name (ascending):");
@@ -29,6 +40,9 @@ public class ProductManager {
         }
     }
 
+    /**
+     * Displays the products sorted by price (descending).
+     */
     public void displaySortedByPrice() {
         products.sort(Comparator.comparingDouble(Product::getPrice).reversed());
         System.out.println("Products sorted by price (descending):");
@@ -37,6 +51,9 @@ public class ProductManager {
         }
     }
 
+    /**
+     * Displays the products sorted by quantity (ascending).
+     */
     public void displaySortedByQuantity() {
         products.sort(Comparator.comparingInt(Product::getQuantity));
         System.out.println("Products sorted by quantity (ascending):");
@@ -45,11 +62,18 @@ public class ProductManager {
         }
     }
 
+    /**
+     * Displays the highest priced product.
+     */
     public void displayHighestPrice() {
         Product highestPriced = Collections.max(products, Comparator.comparingDouble(Product::getPrice));
         System.out.println("Product with the highest price: " + highestPriced.getName());
     }
 
+    /**
+     * Clones the whole collection of products into a
+     * new ArrayList and displays the contents of the cloned list
+     */
     public void displayClonedProducts() {
         ArrayList<Product> clonedProducts = new ArrayList<>();
         for (Product p : products) {
@@ -61,6 +85,10 @@ public class ProductManager {
         }
     }
 
+    /**
+     * Runs the main program loop,
+     * allowing the user to interact with the program.
+     */
     public void run() {
         while (true) {
             System.out.println("\n1. Add Product");
@@ -102,6 +130,9 @@ public class ProductManager {
         }
     }
 
+    /**
+     * Entry point for the application.
+     */
     public static void main(String[] args) {
         new ProductManager().run();
     }
