@@ -18,12 +18,47 @@ public class ProductManager {
      * User inputs product info to be added.
      */
     public void addProduct() {
-        System.out.print("Enter product name: ");
-        String name = scanner.nextLine();
-        System.out.print("Enter product price: ");
-        double price = Double.parseDouble(scanner.nextLine());
-        System.out.print("Enter product quantity: ");
-        int quantity = Integer.parseInt(scanner.nextLine());
+        String name = "";
+        double price = 0;
+        int quantity = 0;
+
+        // Input name (non-empty string)
+        while (true) {
+            System.out.print("Enter product name: ");
+            name = scanner.nextLine().trim();
+            if (!name.isEmpty()) {
+                break;
+            }
+            System.out.println("Product name cannot be empty. Please try again.");
+        }
+
+        // Input price (positive double)
+        while (true) {
+            try {
+                System.out.print("Enter product price: ");
+                price = Double.parseDouble(scanner.nextLine());
+                if (price >= 0) {
+                    break;
+                }
+                System.out.println("Price must be non-negative. Please try again.");
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input. Please enter a valid number for price.");
+            }
+        }
+
+        // Input quantity (non-negative integer)
+        while (true) {
+            try {
+                System.out.print("Enter product quantity: ");
+                quantity = Integer.parseInt(scanner.nextLine());
+                if (quantity >= 0) {
+                    break;
+                }
+                System.out.println("Quantity must be non-negative. Please try again.");
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input. Please enter a valid integer for quantity.");
+            }
+        }
 
         products.add(new Product(name, price, quantity));
         System.out.println("Product added successfully.");
@@ -100,7 +135,18 @@ public class ProductManager {
             System.out.println("7. Exit");
             System.out.print("Enter your choice: ");
 
-            int choice = Integer.parseInt(scanner.nextLine());
+            int choice = 0;
+            boolean validInput = false;
+
+            while (!validInput) {
+                try {
+                    choice = Integer.parseInt(scanner.nextLine());
+                    validInput = true;
+                } catch (NumberFormatException e) {
+                    System.out.println("Invalid input. Please enter a number.");
+                    System.out.print("Enter your choice: ");
+                }
+            }
 
             switch (choice) {
                 case 1:
