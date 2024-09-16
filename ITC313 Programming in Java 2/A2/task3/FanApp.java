@@ -6,6 +6,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.HBox;
 import javafx.scene.shape.Arc;
 import javafx.scene.shape.ArcType;
+import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 import javafx.scene.paint.Color;
 import javafx.animation.Animation;
@@ -23,8 +24,8 @@ import javafx.beans.binding.NumberBinding;
 import java.net.URL;
 
 /**
- * A JavaFX application that simulates a fan with Start and Reverse controls.
- * The fan blades are arcs, and the fan emits sounds when starting and stopping.
+ * A JavaFX application that simulates a fan with Start/Stop and Reverse
+ * controls.
  */
 public class FanApp extends Application {
 
@@ -32,102 +33,72 @@ public class FanApp extends Application {
     private boolean isClockwise = true;
     private AudioClip fanSound;
     private AudioClip clickSound;
+    private Button startStopButton;
+    private Pane fanPane; // Declare fanPane at the class level
 
     @Override
     public void start(Stage primaryStage) {
-        // Create the fan pane
-        Pane fanPane = createFan();
-
-        // Load sounds
+        fanPane = createFan(); // Initialize fanPane
         loadSounds();
-
-        // Create buttons
-        Button startButton = new Button("Start");
+        startStopButton = new Button("Start");
         Button reverseButton = new Button("Reverse");
 
-        // Set button actions
-        startButton.setOnAction(e -> toggleFan(fanPane, true));
-        reverseButton.setOnAction(e -> toggleFan(fanPane, false));
+        startStopButton.setOnAction(e -> toggleFan(false));
+        reverseButton.setOnAction(e -> toggleFan(true));
 
-        // Create layout using BorderPane
         BorderPane root = new BorderPane();
         root.setCenter(fanPane);
 
-        // Create an HBox for buttons
-        HBox buttonBox = new HBox(10, startButton, reverseButton);
+        HBox buttonBox = new HBox(10, startStopButton, reverseButton);
         buttonBox.setAlignment(Pos.CENTER);
         buttonBox.setPadding(new Insets(10));
-
         root.setBottom(buttonBox);
 
         Scene scene = new Scene(root, 400, 450);
-
         primaryStage.setTitle("Fan Application");
         primaryStage.setScene(scene);
         primaryStage.show();
     }
 
-    /**
-     * Loads the sound files for the fan and click sounds.
-     */
     private void loadSounds() {
         try {
             URL fanSoundURL = getClass().getResource("/task3/resources/fan.wav");
             URL clickSoundURL = getClass().getResource("/task3/resources/click.wav");
-
-            if (fanSoundURL != null && clickSoundURL != null) {
-                fanSound = new AudioClip(fanSoundURL.toExternalForm());
-                clickSound = new AudioClip(clickSoundURL.toExternalForm());
-
-                // Set volume levels
-                fanSound.setCycleCount(AudioClip.INDEFINITE);
-                fanSound.setVolume(0.5); // Adjust volume as needed
-                clickSound.setVolume(0.5);
-            } else {
-                System.err.println(
-                        "Audio files not found. Please ensure fan.wav and click.wav are in the resources folder.");
-            }
-
+            fanSound = new AudioClip(fanSoundURL.toExternalForm());
+            clickSound = new AudioClip(clickSoundURL.toExternalForm());
+            fanSound.setCycleCount(AudioClip.INDEFINITE);
+            fanSound.setVolume(0.1);
+            clickSound.setVolume(0.5);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
 
-    /**
-     * Creates the fan composed of four arcs as blades.
-     *
-     * @return Pane containing the fan blades.
-     */
     private Pane createFan() {
         Pane pane = new Pane();
         pane.setPrefSize(400, 400);
 
-        // Bindings for center and radius
         DoubleBinding centerX = pane.widthProperty().divide(2.0);
         DoubleBinding centerY = pane.heightProperty().divide(2.0);
         NumberBinding radius = Bindings.min(pane.widthProperty(), pane.heightProperty()).divide(2.0).subtract(20);
 
-        // Create blades with different colors
-        Arc blade1 = createBlade(centerX, centerY, radius, 0, Color.BLUE);
-        Arc blade2 = createBlade(centerX, centerY, radius, 90, Color.RED);
-        Arc blade3 = createBlade(centerX, centerY, radius, 180, Color.GREEN);
-        Arc blade4 = createBlade(centerX, centerY, radius, 270, Color.ORANGE);
+        for (int i = 0; i < 6; i++) {
+            Arc blade = createBlade(centerX, centerY, radius, i * 60, i % 2 == 0 ? Color.PURPLE : Color.BLACK);
+            pane.getChildren().add(blade);
+        }
 
-        pane.getChildren().addAll(blade1, blade2, blade3, blade4);
+        Circle outerCircle = new Circle();
+        outerCircle.centerXProperty().bind(centerX);
+        outerCircle.centerYProperty().bind(centerY);
+        outerCircle.radiusProperty().bind(radius.add(5));
+        outerCircle.setFill(Color.TRANSPARENT);
+        outerCircle.setStroke(Color.BLACK);
+        outerCircle.setStrokeWidth(2);
 
+        pane.getChildren().add(outerCircle);
         return pane;
     }
 
-    /**
-     * Creates an individual fan blade as an Arc.
-     *
-     * @param centerX    Binding for the centerX property.
-     * @param centerY    Binding for the centerY property.
-     * @param radius     Binding for the radius properties.
-     * @param startAngle Starting angle of the arc.
-     * @param color      Color of the blade.
-     * @return Configured Arc representing a blade.
-     */
     private Arc createBlade(DoubleBinding centerX, DoubleBinding centerY, NumberBinding radius, double startAngle,
             Color color) {
         Arc blade = new Arc();
@@ -142,37 +113,27 @@ public class FanApp extends Application {
         return blade;
     }
 
-    /**
-     * Toggles the fan's running state and direction.
-     *
-     * @param fanPane   The Pane containing the fan blades.
-     * @param clockwise true to run clockwise, false to run counter-clockwise.
-     */
-    private void toggleFan(Pane fanPane, boolean clockwise) {
-        if (animation != null && animation.getStatus() == Animation.Status.RUNNING) {
-            stopFan();
+    private void toggleFan(boolean changeDirection) {
+        if (animation == null) {
+            startFan();
+        } else if (changeDirection) {
+            reverseFanDirection();
         } else {
-            isClockwise = clockwise;
-            startFan(fanPane);
+            if (animation.getStatus() == Animation.Status.RUNNING) {
+                stopFan();
+            } else {
+                startFan();
+            }
         }
     }
 
-    /**
-     * Starts the fan animation.
-     *
-     * @param fanPane The Pane containing the fan blades.
-     */
-    private void startFan(Pane fanPane) {
-        createAnimation(fanPane);
+    private void startFan() {
+        createAnimation();
         animation.play();
-        if (fanSound != null && !fanSound.isPlaying()) {
-            fanSound.play();
-        }
+        playFanSound();
+        startStopButton.setText("Stop");
     }
 
-    /**
-     * Stops the fan animation and plays the click sound.
-     */
     private void stopFan() {
         if (animation != null) {
             animation.stop();
@@ -180,26 +141,39 @@ public class FanApp extends Application {
         if (fanSound != null && fanSound.isPlaying()) {
             fanSound.stop();
         }
-        if (clickSound != null) {
-            clickSound.play();
+        playClickSound();
+        startStopButton.setText("Start");
+    }
+
+    private void reverseFanDirection() {
+        isClockwise = !isClockwise;
+        // Adjust the existing animation's direction without stopping it
+        if (animation != null) {
+            animation.getKeyFrames().setAll(new KeyFrame(Duration.millis(5),
+                    e -> fanPane.setRotate(fanPane.getRotate() + (isClockwise ? 1 : -1))));
         }
     }
 
-    /**
-     * Creates the animation Timeline for rotating the fan.
-     *
-     * @param fanPane The Pane containing the fan blades.
-     */
-    private void createAnimation(Pane fanPane) {
+    private void createAnimation() {
         if (animation != null) {
-            animation.stop();
+            animation.stop(); // Ensure any existing animation is stopped before creating a new one
         }
-
+        double rotationIncrement = isClockwise ? 1 : -1;
         animation = new Timeline(
-                new KeyFrame(Duration.millis(10), e -> {
-                    fanPane.setRotate(fanPane.getRotate() + (isClockwise ? 1 : -1));
-                }));
+                new KeyFrame(Duration.millis(5), e -> fanPane.setRotate(fanPane.getRotate() + rotationIncrement)));
         animation.setCycleCount(Timeline.INDEFINITE);
+    }
+
+    private void playFanSound() {
+        if (fanSound != null && !fanSound.isPlaying()) {
+            fanSound.play();
+        }
+    }
+
+    private void playClickSound() {
+        if (clickSound != null) {
+            clickSound.play();
+        }
     }
 
     public static void main(String[] args) {
