@@ -13,11 +13,19 @@
 
 3. Compile the program:
 
+Debian/ubuntu:
 `javac --module-path "$PATH_TO_FX" --add-modules javafx.controls,javafx.fxml,javafx.media task3/*.java`
+
+Windows:
+`javac --module-path "%PATH_TO_FX%" --add-modules javafx.controls,javafx.fxml,javafx.media task3/*.java`
 
 4. Run the program:
 
+Debian/ubuntu:
 `java --module-path "$PATH_TO_FX" --add-modules javafx.controls,javafx.fxml,javafx.media task3.FanApp`
+
+Windows:
+`java --module-path "%PATH_TO_FX%" --add-modules javafx.controls,javafx.fxml,javafx.media task3.FanApp`
 
 ## Notes
 
@@ -26,3 +34,4 @@
 - `--add-modules` specifies which modules should be added to the module graph.
 - `javafx.controls` is the module that contains the JavaFX UI controls.
 - `javafx.fxml` is the module that uses FXML for the UI to be defined.
+- `javafx.media` is the module that provides the API for the AudioClip.

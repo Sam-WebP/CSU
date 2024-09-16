@@ -13,11 +13,19 @@
 
 3. Compile the program:
 
+Debian/ubuntu:
 `javac --module-path "$PATH_TO_FX" --add-modules javafx.controls,javafx.fxml task1/*.java`
+
+Windows:
+`javac --module-path "%PATH_TO_FX%" --add-modules javafx.controls,javafx.fxml task1/*.java`
 
 4. Run the program:
 
+Debian/ubuntu:
 `java --module-path "$PATH_TO_FX" --add-modules javafx.controls,javafx.fxml task1.XYZSalesSummary`
+
+Windows:
+`java --module-path "%PATH_TO_FX%" --add-modules javafx.controls,javafx.fxml task1.XYZSalesSummary`
 
 ## Notes
 

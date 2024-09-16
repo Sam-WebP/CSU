@@ -13,11 +13,19 @@
 
 3. Compile the program:
 
+Debian/ubuntu:
 `javac --module-path "$PATH_TO_FX" --add-modules javafx.controls,javafx.fxml task2/*.java`
+
+Windows:
+`javac --module-path "%PATH_TO_FX%" --add-modules javafx.controls,javafx.fxml task2/*.java`
 
 4. Run the program:
 
+Debian/ubuntu:
 `java --module-path "$PATH_TO_FX" --add-modules javafx.controls,javafx.fxml task2.ShowPointsApp task2/points.txt`
+
+Windows:
+`java --module-path "%PATH_TO_FX%" --add-modules javafx.controls,javafx.fxml task2.ShowPointsApp task2/points.txt`
 
 ## Notes
 
