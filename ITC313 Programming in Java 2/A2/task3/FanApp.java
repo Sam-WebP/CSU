@@ -36,6 +36,10 @@ public class FanApp extends Application {
     private Button startStopButton;
     private Pane fanPane; // Declare fanPane at the class level
 
+    /**
+     * Displays the stage with the fan and control buttons.
+     * @param primaryStage The primary stage for this application.
+     */
     @Override
     public void start(Stage primaryStage) {
         fanPane = createFan(); // Initialize fanPane
@@ -60,6 +64,9 @@ public class FanApp extends Application {
         primaryStage.show();
     }
 
+    /**
+     * Loads sound effects from resources.
+     */
     private void loadSounds() {
         try {
             URL fanSoundURL = getClass().getResource("/task3/resources/fan.wav");
@@ -74,6 +81,10 @@ public class FanApp extends Application {
         }
     }
 
+    /**
+     * Visuals of the fan.
+     * @return Pane that has the fan blades and outer circle.
+     */
     private Pane createFan() {
         Pane pane = new Pane();
         pane.setPrefSize(400, 400);
@@ -99,6 +110,15 @@ public class FanApp extends Application {
         return pane;
     }
 
+    /**
+     * Creates a single fan blade using Arc objects.
+     * @param centerX The center x-coordinate of the blade.
+     * @param centerY The center y-coordinate of the blade.
+     * @param radius The radius of the blade.
+     * @param startAngle The starting angle for the blade.
+     * @param color The color of the blade.
+     * @return The created blade as an Arc object.
+     */
     private Arc createBlade(DoubleBinding centerX, DoubleBinding centerY, NumberBinding radius, double startAngle,
             Color color) {
         Arc blade = new Arc();
@@ -113,6 +133,10 @@ public class FanApp extends Application {
         return blade;
     }
 
+    /**
+     * Toggles the fan's operation state or direction based on user interaction.
+     * @param changeDirection Indicates whether to change the direction of rotation.
+     */
     private void toggleFan(boolean changeDirection) {
         if (animation == null) {
             startFan();
@@ -127,6 +151,9 @@ public class FanApp extends Application {
         }
     }
 
+    /**
+     * Starts the fan animation and plays the fan sound effect.
+     */
     private void startFan() {
         createAnimation();
         animation.play();
@@ -134,6 +161,9 @@ public class FanApp extends Application {
         startStopButton.setText("Stop");
     }
 
+    /**
+     * Stops the fan animation and fan sound effect, and plays the click sound.
+     */
     private void stopFan() {
         if (animation != null) {
             animation.stop();
@@ -145,18 +175,23 @@ public class FanApp extends Application {
         startStopButton.setText("Start");
     }
 
+    /**
+     * Reverses the fan rotation direction.
+     */
     private void reverseFanDirection() {
         isClockwise = !isClockwise;
-        // Adjust the existing animation's direction without stopping it
         if (animation != null) {
             animation.getKeyFrames().setAll(new KeyFrame(Duration.millis(5),
                     e -> fanPane.setRotate(fanPane.getRotate() + (isClockwise ? 1 : -1))));
         }
     }
 
+    /**
+     * Handles the fan's rotation animation.
+     */
     private void createAnimation() {
         if (animation != null) {
-            animation.stop(); // Ensure any existing animation is stopped before creating a new one
+            animation.stop();
         }
         double rotationIncrement = isClockwise ? 1 : -1;
         animation = new Timeline(
@@ -164,18 +199,28 @@ public class FanApp extends Application {
         animation.setCycleCount(Timeline.INDEFINITE);
     }
 
+    /**
+     * Plays the fan sound effect.
+     */
     private void playFanSound() {
         if (fanSound != null && !fanSound.isPlaying()) {
             fanSound.play();
         }
     }
 
+    /**
+     * Plays the click sound effect.
+     */
     private void playClickSound() {
         if (clickSound != null) {
             clickSound.play();
         }
     }
 
+    /**
+     * Entry point of the program.
+     * @param args the command line arguments.
+     */
     public static void main(String[] args) {
         launch(args);
     }
