@@ -67,20 +67,16 @@ public class DataManager {
 
         if (incomeRange.contains("-")) {
             String[] rangeParts = incomeRange.split("-");
-            double lowerBound = parseAmount(rangeParts[0].trim());
-            double upperBound = parseAmount(rangeParts[1].trim());
-            minIncome = lowerBound - 1;
-            maxIncome = upperBound;
+            minIncome = parseAmount(rangeParts[0].trim());
+            maxIncome = parseAmount(rangeParts[1].trim());
         } else if (incomeRange.contains("and over")) {
             String[] rangeParts = incomeRange.split("and over");
-            double lowerBound = parseAmount(rangeParts[0].trim().replaceAll("[,$]", ""));
-            minIncome = lowerBound;
+            minIncome = parseAmount(rangeParts[0].trim().replaceAll("[,$]", ""));
             maxIncome = Double.MAX_VALUE;
         } else {
             throw new Exception("Invalid income range format.");
         }
 
-        // Parse tax calculation
         if (taxCalculation.startsWith("$")) {
             String[] taxParts = taxCalculation.split("plus");
             baseTax = parseAmount(taxParts[0].trim());
@@ -88,6 +84,11 @@ public class DataManager {
         } else {
             rate = parseRate(taxCalculation.trim());
         }
+
+        System.out.println("Parsed TaxRate: minIncome = " + minIncome +
+                ", maxIncome = " + (maxIncome == Double.MAX_VALUE ? "and over" : maxIncome) +
+                ", baseTax = " + baseTax +
+                ", rate = " + rate);
 
         return new TaxRate(minIncome, maxIncome, baseTax, rate);
     }

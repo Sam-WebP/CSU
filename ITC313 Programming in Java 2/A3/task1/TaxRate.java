@@ -28,4 +28,14 @@ public class TaxRate {
     public double getRate() {
         return rate;
     }
+
+    @Override
+    public String toString() {
+        return "TaxRate{" +
+                "minIncome=" + minIncome +
+                ", maxIncome=" + (maxIncome == Double.MAX_VALUE ? "and over" : maxIncome) +
+                ", baseTax=" + baseTax +
+                ", rate=" + rate +
+                '}';
+    }
 }
