@@ -60,19 +60,21 @@ public class DataManager {
             throw new Exception("Invalid format. Expected at least two parts separated by spaces.");
         }
 
-        String incomeRange = parts[0];
-        String taxCalculation = parts[1];
+        String incomeRange = parts[0].trim();
+        String taxCalculation = parts[1].trim();
 
         double minIncome, maxIncome, baseTax = 0, rate;
 
-        // Parse income range
         if (incomeRange.contains("-")) {
             String[] rangeParts = incomeRange.split("-");
-            minIncome = parseAmount(rangeParts[0]);
-            maxIncome = parseAmount(rangeParts[1]);
+            double lowerBound = parseAmount(rangeParts[0].trim());
+            double upperBound = parseAmount(rangeParts[1].trim());
+            minIncome = lowerBound - 1;
+            maxIncome = upperBound;
         } else if (incomeRange.contains("and over")) {
             String[] rangeParts = incomeRange.split("and over");
-            minIncome = parseAmount(rangeParts[0]);
+            double lowerBound = parseAmount(rangeParts[0].trim().replaceAll("[,$]", ""));
+            minIncome = lowerBound;
             maxIncome = Double.MAX_VALUE;
         } else {
             throw new Exception("Invalid income range format.");
@@ -81,10 +83,10 @@ public class DataManager {
         // Parse tax calculation
         if (taxCalculation.startsWith("$")) {
             String[] taxParts = taxCalculation.split("plus");
-            baseTax = parseAmount(taxParts[0]);
-            rate = parseRate(taxParts[1]);
+            baseTax = parseAmount(taxParts[0].trim());
+            rate = parseRate(taxParts[1].trim());
         } else {
-            rate = parseRate(taxCalculation);
+            rate = parseRate(taxCalculation.trim());
         }
 
         return new TaxRate(minIncome, maxIncome, baseTax, rate);
