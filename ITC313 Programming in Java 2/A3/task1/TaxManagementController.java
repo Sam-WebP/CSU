@@ -37,10 +37,22 @@ public class TaxManagementController {
     private void handleCalculateButton(ActionEvent event) {
         String id = idField.getText();
         String financialYear = financialYearField.getText();
-        double taxableIncome = Double.parseDouble(taxableIncomeField.getText());
+        String taxableIncomeText = taxableIncomeField.getText();
 
-        if (id.isEmpty() || financialYear.isEmpty() || taxableIncome <= 0) {
-            showAlert("Warning", "ID, Financial Year, and Taxable Income cannot be empty or negative.");
+        if (id.isEmpty() || financialYear.isEmpty() || taxableIncomeText.isEmpty()) {
+            showAlert("Warning", "ID, Financial Year, and Taxable Income cannot be empty.");
+            return;
+        }
+
+        double taxableIncome;
+        try {
+            taxableIncome = Double.parseDouble(taxableIncomeText);
+            if (taxableIncome <= 0) {
+                showAlert("Warning", "Taxable Income must be greater than zero.");
+                return;
+            }
+        } catch (NumberFormatException e) {
+            showAlert("Warning", "Taxable Income must be a valid number.");
             return;
         }
 
