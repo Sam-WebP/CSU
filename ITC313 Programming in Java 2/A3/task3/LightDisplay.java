@@ -34,7 +34,6 @@ public class LightDisplay extends Application {
 
         BorderPane mainLayout = createMainLayout();
         Scene scene = new Scene(mainLayout, 400, 300);
-        // scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
 
         primaryStage.setTitle("Light Display Application");
         primaryStage.setScene(scene);
