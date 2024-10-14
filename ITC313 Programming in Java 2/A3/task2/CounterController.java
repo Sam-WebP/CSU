@@ -10,6 +10,9 @@ import javafx.geometry.Pos;
 
 import java.util.Optional;
 
+/**
+ * Controller class that manages the UI and the counter logic.
+ */
 public class CounterController {
     private IntCounter intCounter;
     private TextCounter textCounter;
@@ -33,6 +36,10 @@ public class CounterController {
         initializeUI();
     }
 
+    /**
+     * Initialises the user interface, creating and arranging UI elements.
+     * Sets up event handlers for buttons and menu items.
+     */
     private void initializeUI() {
         root = new BorderPane();
 
@@ -61,7 +68,7 @@ public class CounterController {
         buttonBox.getChildren().addAll(startButton, pauseButton, resumeButton);
         root.setBottom(buttonBox);
 
-        // Initialize Button States
+        // Initialise Button States
         updateButtonStates();
 
         // Event Handlers
@@ -72,11 +79,19 @@ public class CounterController {
         exitMenuItem.setOnAction(this::handleExit);
     }
 
+    /**
+     * @return The BorderPane for the main application view.
+     */
     public BorderPane getView() {
         return root;
     }
 
-    // Event Handlers
+    /**
+     * Handles the Start button when clicked.
+     * Starts the counter if it's currently stopped.
+     * 
+     * @param event The ActionEvent triggered by the button click.
+     */
     private void handleStart(ActionEvent event) {
         if (state == CounterState.STOPPED) {
             intCounter.setCount(0);
@@ -89,6 +104,12 @@ public class CounterController {
         }
     }
 
+    /**
+     * Handles the Pause button when clicked.
+     * Pauses the counter if it's currently running.
+     * 
+     * @param event The ActionEvent triggered by the button click.
+     */
     private void handlePause(ActionEvent event) {
         if (state == CounterState.RUNNING) {
             counterTask.pause();
@@ -97,6 +118,12 @@ public class CounterController {
         }
     }
 
+    /**
+     * Handles the Resume button when clicked.
+     * Resumes the counter if it's currently paused.
+     * 
+     * @param event The ActionEvent triggered by the button click.
+     */
     private void handleResume(ActionEvent event) {
         if (state == CounterState.PAUSED) {
             counterTask.resumeTask();
@@ -105,6 +132,12 @@ public class CounterController {
         }
     }
 
+    /**
+     * Handles the Delay menu item when clicked.
+     * Allows the user to change the delay between counter increments.
+     * 
+     * @param event The ActionEvent triggered by the menu item click.
+     */
     private void handleDelay(ActionEvent event) {
         boolean wasRunning = (state == CounterState.RUNNING);
         if (wasRunning) {
@@ -137,6 +170,12 @@ public class CounterController {
         }
     }
 
+    /**
+     * Handles the Exit menu item when clicked.
+     * Stops the counter and exits the application.
+     * 
+     * @param event The ActionEvent triggered by the menu item click.
+     */
     public void handleExit(ActionEvent event) {
         if (counterTask != null) {
             counterTask.stop();
@@ -154,7 +193,9 @@ public class CounterController {
         Platform.exit();
     }
 
-    // Helper Methods
+    /**
+     * Updates the enabled/disabled state of the buttons based on the state.
+     */
     private void updateButtonStates() {
         switch (state) {
             case STOPPED:
@@ -175,6 +216,12 @@ public class CounterController {
         }
     }
 
+    /**
+     * Displays an alert dialog with the given title and message.
+     * 
+     * @param title   The title of the alert dialog.
+     * @param message The message to display in the alert dialog.
+     */
     private void showAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR, message, ButtonType.OK);
         alert.setHeaderText(null);
