@@ -10,15 +10,29 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Manages data access for tax rates and tax results.
+ * Reads tax rates from a file and interacts with a database for tax results.
+ */
 public class DataManager {
     private static final String TAX_RATES_FILE = "task1/taxrates.txt";
 
     private DatabaseConnection databaseConnection;
 
+    /**
+     * Constructs a DataManager and initialises the database connection.
+     */
     public DataManager() {
         databaseConnection = new DatabaseConnection();
     }
 
+    /**
+     * Reads tax rates from the taxrates.txt file.
+     * Handles file reading and parsing of tax rate data.
+     * 
+     * @return A list of TaxRate objects, or an empty list if there's an error or no
+     *         valid rates.
+     */
     public List<TaxRate> readTaxRatesFromFile() {
         List<TaxRate> taxRates = new ArrayList<>();
 
@@ -54,6 +68,14 @@ public class DataManager {
         return taxRates;
     }
 
+    /**
+     * Parses a single line from the tax rates file into a TaxRate object.
+     * 
+     * @param line       The line to parse.
+     * @param lineNumber The line number (for error reporting).
+     * @return A TaxRate object, or null if the line is invalid.
+     * @throws Exception If there's an error parsing the line.
+     */
     private TaxRate parseTaxRateLine(String line, int lineNumber) throws Exception {
         String[] parts = line.split("\\s{2,}"); // Split by two or more spaces
         if (parts.length < 2) {
@@ -93,6 +115,12 @@ public class DataManager {
         return new TaxRate(minIncome, maxIncome, baseTax, rate);
     }
 
+    /**
+     * Parses a rate string into a double.
+     * 
+     * @param rateString The string containing the rate
+     * @return The parsed rate as a double.
+     */
     private double parseRate(String rateString) {
         if (rateString.contains("cents")) {
             return Double.parseDouble(rateString.split("cents")[0].trim()) / 100;
@@ -101,10 +129,21 @@ public class DataManager {
         }
     }
 
+    /**
+     * Parses an amount string into a double.
+     * 
+     * @param amount The string containing the amount
+     * @return The parsed amount as a double.
+     */
     private double parseAmount(String amount) {
         return Double.parseDouble(amount.replaceAll("[$,]", ""));
     }
 
+    /**
+     * Saves a tax result to the database.
+     * 
+     * @param taxResult The TaxResult object to save.
+     */
     public void saveTaxResult(TaxResult taxResult) {
         String sql = "INSERT INTO TaxResult (ID, FinancialYear, TaxableIncome, Tax) VALUES (?, ?, ?, ?)";
 
@@ -120,6 +159,12 @@ public class DataManager {
         }
     }
 
+    /**
+     * Retrieves a tax result from the database by ID.
+     * 
+     * @param id The ID of the tax result to retrieve.
+     * @return The TaxResult object, or null if not found.
+     */
     public TaxResult getTaxResultByID(String id) {
         String sql = "SELECT * FROM TaxResult WHERE ID = ?";
         TaxResult taxResult = null;
@@ -143,6 +188,11 @@ public class DataManager {
         return taxResult;
     }
 
+    /**
+     * Updates an existing tax result in the database.
+     * 
+     * @param taxResult The TaxResult object with updated values.
+     */
     public void updateTaxResult(TaxResult taxResult) {
         String sql = "UPDATE TaxResult SET FinancialYear = ?, TaxableIncome = ?, Tax = ? WHERE ID = ?";
 
@@ -158,6 +208,11 @@ public class DataManager {
         }
     }
 
+    /**
+     * Deletes a tax result from the database by ID.
+     * 
+     * @param id The ID of the tax result to delete.
+     */
     public void deleteTaxResult(String id) {
         String sql = "DELETE FROM TaxResult WHERE ID = ?";
 

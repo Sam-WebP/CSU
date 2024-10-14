@@ -10,6 +10,10 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
+/**
+ * FXML file for the tax management view.
+ * Provides a user interface for managing tax records.
+ */
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="task1.TaxManagementController">
    <children>
       <GridPane hgap="10.0" vgap="10.0">

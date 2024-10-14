@@ -7,6 +7,9 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 
+/**
+ * Controller class for managing tax calculations and database operations.
+ */
 public class TaxManagementController {
     @FXML
     private TextField idField;
@@ -28,11 +31,19 @@ public class TaxManagementController {
     private TaxManagementService taxManagementService;
     private TaxCalculator taxCalculator;
 
+    /**
+     * Initialises the controller, instantiating the service and calculator.
+     */
     public void initialize() {
         taxManagementService = new TaxManagementService();
         taxCalculator = new TaxCalculator();
     }
 
+    /**
+     * Handles the calculate button click, calculating and saving tax results.
+     * 
+     * @param event The button click event.
+     */
     @FXML
     private void handleCalculateButton(ActionEvent event) {
         String id = idField.getText();
@@ -67,6 +78,11 @@ public class TaxManagementController {
         taxField.setText(String.format("$%.2f", taxResult.getTax()));
     }
 
+    /**
+     * Handles the search button click, retrieving tax results by ID.
+     * 
+     * @param event The button click event.
+     */
     @FXML
     private void handleSearchButton(ActionEvent event) {
         String id = idField.getText();
@@ -87,6 +103,11 @@ public class TaxManagementController {
         taxField.setText(String.format("$%.2f", taxResult.getTax()));
     }
 
+    /**
+     * Handles the update button click, updating existing tax results.
+     * 
+     * @param event The button click event.
+     */
     @FXML
     private void handleUpdateButton(ActionEvent event) {
         String id = idField.getText();
@@ -110,6 +131,11 @@ public class TaxManagementController {
         taxManagementService.updateTaxResult(taxResult);
     }
 
+    /**
+     * Handles the delete button click, deleting tax results by ID.
+     * 
+     * @param event The button click event.
+     */
     @FXML
     private void handleDeleteButton(ActionEvent event) {
         String id = idField.getText();
@@ -128,6 +154,12 @@ public class TaxManagementController {
         taxManagementService.deleteTaxResult(id);
     }
 
+    /**
+     * Displays an alert dialog with a warning message.
+     * 
+     * @param title   The title of the alert.
+     * @param message The message to display.
+     */
     private void showAlert(String title, String message) {
         Alert alert = new Alert(AlertType.WARNING);
         alert.setTitle(title);

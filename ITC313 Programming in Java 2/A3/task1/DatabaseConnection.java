@@ -4,8 +4,16 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+/**
+ * Provides a connection to the TaxManagementSystem database.
+ */
 public class DatabaseConnection {
 
+    /**
+     * Establishes a connection to the MySQL database.
+     *
+     * @return A Connection object if successful, null otherwise.
+     */
     public static Connection getConnection() {
         Connection connection = null;
         try {
@@ -24,6 +32,11 @@ public class DatabaseConnection {
         return connection;
     }
 
+    /**
+     * Tests the database connection.
+     * 
+     * @param args Command line arguments (not used).
+     */
     public static void main(String[] args) {
         getConnection();
     }
