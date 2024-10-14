@@ -12,6 +12,10 @@ import javafx.stage.Stage;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * An application that displays flashing lights.
+ * The user can control the lights with Start, Stop, Pause, and Resume buttons.
+ */
 public class LightDisplay extends Application {
 
     private List<FlashingLight> flashingLights = new ArrayList<>();
@@ -28,6 +32,12 @@ public class LightDisplay extends Application {
     private MenuItem exitMenuItem;
     private MenuItem aboutMenuItem;
 
+    /**
+     * Starts the JavaFX application.
+     *
+     * @param primaryStage the primary stage for this application, onto which
+     *                     the application scene is set.
+     */
     @Override
     public void start(Stage primaryStage) {
         initializeUI();
@@ -48,7 +58,7 @@ public class LightDisplay extends Application {
     }
 
     /**
-     * Initializes all UI components.
+     * Initialises all UI components.
      */
     private void initializeUI() {
         createMenuBar();

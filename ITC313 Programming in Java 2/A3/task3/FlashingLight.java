@@ -5,6 +5,11 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+/**
+ * Represents a flashing light implemented as a JavaFX Circle.
+ * The light changes to a random colour every 20 milliseconds.
+ * It can be started, stopped, paused, and resumed.
+ */
 public class FlashingLight extends Circle implements Runnable {
 
     private Thread flashThread;
@@ -12,10 +17,16 @@ public class FlashingLight extends Circle implements Runnable {
     private final AtomicBoolean isPaused = new AtomicBoolean(false);
     private final double radius;
 
+    /**
+     * Creates a new FlashingLight with the specified radius.
+     * The initial colour of the light is black before the flashing starts.
+     *
+     * @param radius The radius of the circle light.
+     */
     public FlashingLight(double radius) {
         super(radius);
         this.radius = radius;
-        this.setFill(Color.BLACK); // Initial color
+        this.setFill(Color.BLACK); // Initial colour
     }
 
     /**
@@ -27,12 +38,13 @@ public class FlashingLight extends Circle implements Runnable {
         }
         isRunning.set(true);
         flashThread = new Thread(this);
-        flashThread.setDaemon(true); // Daemon thread exits when the application exits
+        flashThread.setDaemon(true);
         flashThread.start();
     }
 
     /**
-     * Stops the flashing thread.
+     * Stops the flashing animation and resets the light to its initial "off"
+     * colour.
      */
     public void stopFlashing() {
         isRunning.set(false);
@@ -41,7 +53,7 @@ public class FlashingLight extends Circle implements Runnable {
             flashThread.interrupt();
         }
         // Reset light colour to be blank
-        Platform.runLater(() -> this.setFill(Color.BLACK)); // Or any initial state
+        Platform.runLater(() -> this.setFill(Color.BLACK));
     }
 
     /**
@@ -52,7 +64,7 @@ public class FlashingLight extends Circle implements Runnable {
     }
 
     /**
-     * Resumes the flashing.
+     * Resumes the flashing animation if it was previously paused.
      */
     public void resumeFlashing() {
         isPaused.set(false);
@@ -61,6 +73,10 @@ public class FlashingLight extends Circle implements Runnable {
         }
     }
 
+    /**
+     * The main loop for the flashing animation. Runs on a separate thread.
+     * Changes the colour of the light to a random colour every 20 milliseconds.
+     */
     @Override
     public void run() {
         try {
@@ -70,7 +86,7 @@ public class FlashingLight extends Circle implements Runnable {
                         isPaused.wait();
                     }
                 }
-                // Change to a random color
+                // Change to a random colour
                 Color randomColor = ColorUtil.generateRandomColor();
                 Platform.runLater(() -> this.setFill(randomColor));
 
